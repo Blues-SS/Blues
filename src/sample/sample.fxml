@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -9,12 +8,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #fffcf7;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <Button alignment="CENTER" layoutX="326.0" layoutY="273.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" text="Sprints" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="326.0" layoutY="273.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" stylesheets="@Styles.css" text="Sprints" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" layoutX="326.0" layoutY="199.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" text="Nova Sprint" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="326.0" layoutY="199.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleNovaSprint" stylesheets="@Styles.css" text="Nova Sprint" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
@@ -27,18 +26,15 @@
             <DropShadow color="#461601" height="29.89" offsetY="5.0" radius="12.2225" />
          </effect>
       </Label>
-      <Button alignment="CENTER" layoutX="326.0" layoutY="346.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" text="Backlog" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="326.0" layoutY="346.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" stylesheets="@Styles.css" text="Backlog" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" layoutX="326.0" layoutY="422.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleSair" text="Sair" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="326.0" layoutY="422.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleSair" stylesheets="@Styles.css" text="Sair" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
    </children>
-    <stylesheets>
-        <URL value="@Styles.css" />
-    </stylesheets>
 </AnchorPane>
