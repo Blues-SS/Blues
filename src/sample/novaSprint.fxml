@@ -6,47 +6,47 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #fffcf7;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #fffcf7;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <AnchorPane layoutX="18.0" layoutY="80.0" maxHeight="520.0" maxWidth="256.0" minHeight="500.0" minWidth="256.0" prefHeight="500.0" prefWidth="256.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
+      <AnchorPane layoutX="18.0" layoutY="134.0" maxHeight="560.0" maxWidth="416.0" minHeight="560.0" minWidth="416.0" prefHeight="560.0" prefWidth="416.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
          <children>
-            <Label alignment="CENTER" prefHeight="29.0" prefWidth="258.0" style="-fx-border-color: #ff9100; -fx-border-width: 2; -fx-background-color: #fffcf7;" text="TO DO" textAlignment="CENTER">
+            <Label alignment="CENTER" maxHeight="29.0" maxWidth="416.0" minHeight="29.0" minWidth="416.0" prefHeight="29.0" prefWidth="416.0" style="-fx-border-color: #ff9100; -fx-border-width: 2; -fx-background-color: #fffcf7;" text="TO DO" textAlignment="CENTER">
                <font>
                   <Font name="Nirmala UI Bold" size="16.0" />
                </font>
             </Label>
          </children></AnchorPane>
-      <Button layoutX="652.0" layoutY="21.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#handleVoltar" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Voltar">
+      <Button layoutX="1132.0" layoutY="710.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#handleVoltar" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Voltar">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="511.0" layoutY="21.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Nova História">
+      <Button layoutX="1132.0" layoutY="78.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Nova História">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Button>
-      <AnchorPane layoutX="272.0" layoutY="80.0" maxHeight="500.0" maxWidth="256.0" minHeight="500.0" minWidth="256.0" prefHeight="500.0" prefWidth="256.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;">
+      <AnchorPane layoutX="432.0" layoutY="134.0" maxHeight="560.0" maxWidth="416.0" minHeight="560.0" minWidth="416.0" prefHeight="560.0" prefWidth="416.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;">
          <children>
-            <Label alignment="CENTER" prefHeight="29.0" prefWidth="258.0" style="-fx-border-color: #ff9100; -fx-border-width: 2; -fx-background-color: #fffcf7;" text="DOING" textAlignment="CENTER">
+            <Label alignment="CENTER" maxHeight="29.0" maxWidth="416.0" minHeight="29.0" minWidth="416.0" prefHeight="29.0" prefWidth="416.0" style="-fx-border-color: #ff9100; -fx-border-width: 2; -fx-background-color: #fffcf7;" text="DOING" textAlignment="CENTER">
                <font>
                   <Font name="Nirmala UI Bold" size="16.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="526.0" layoutY="80.0" maxHeight="500.0" maxWidth="256.0" minHeight="500.0" minWidth="256.0" prefHeight="500.0" prefWidth="256.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;">
+      <AnchorPane layoutX="846.0" layoutY="134.0" maxHeight="560.0" maxWidth="416.0" minHeight="560.0" minWidth="416.0" prefHeight="560.0" prefWidth="416.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;">
          <children>
-            <Label alignment="CENTER" prefHeight="29.0" prefWidth="256.0" style="-fx-border-color: #ff9100; -fx-border-width: 2; -fx-background-color: #fffcf7;" text="DONE" textAlignment="CENTER">
+            <Label alignment="CENTER" maxHeight="29.0" maxWidth="416.0" minHeight="29.0" minWidth="416.0" prefHeight="29.0" prefWidth="416.0" style="-fx-border-color: #ff9100; -fx-border-width: 2; -fx-background-color: #fffcf7;" text="DONE" textAlignment="CENTER">
                <font>
                   <Font name="Nirmala UI Bold" size="16.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <TextField layoutX="18.0" layoutY="21.0" maxHeight="40.0" maxWidth="480.0" minHeight="40.0" minWidth="480.0" prefHeight="40.0" prefWidth="480.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
+      <TextField layoutX="14.0" layoutY="27.0" maxHeight="60.0" maxWidth="848.0" minHeight="60.0" minWidth="848.0" prefHeight="60.0" prefWidth="848.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font>
       </TextField>
    </children>
