@@ -35,7 +35,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="862.0" layoutY="134.0" maxHeight="560.0" maxWidth="416.0" minHeight="560.0" minWidth="416.0" prefHeight="560.0" prefWidth="416.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;">
+      <TextField layoutX="18.0" layoutY="27.0" maxHeight="60.0" maxWidth="848.0" minHeight="60.0" minWidth="848.0" prefHeight="60.0" prefWidth="848.0" promptText="Nova Sprint" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
          <children>
             <Label alignment="CENTER" maxHeight="29.0" maxWidth="416.0" minHeight="29.0" minWidth="416.0" prefHeight="29.0" prefWidth="416.0" style="-fx-border-color: #ff9100; -fx-border-width: 2; -fx-background-color: #fffcf7;" text="DONE" textAlignment="CENTER">
                <font>
