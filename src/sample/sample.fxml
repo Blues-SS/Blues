@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #fffcf7;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #fffcf7;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <Button alignment="CENTER" layoutX="326.0" layoutY="273.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleSprint" stylesheets="@Styles.css" text="Sprints" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="491.0" layoutY="428.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleSprint" stylesheets="@Styles.css" text="Sprints" textAlignment="CENTER">
          <font>
-            <Font size="20.0" />
+            <Font name="Nirmala UI" size="24.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" layoutX="326.0" layoutY="199.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleNovaSprint" stylesheets="@Styles.css" text="Nova Sprint" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="491.0" layoutY="338.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleNovaSprint" stylesheets="@Styles.css" text="Nova Sprint" textAlignment="CENTER">
          <font>
-            <Font size="20.0" />
+            <Font name="Nirmala UI" size="24.0" />
          </font>
       </Button>
-      <Label alignment="CENTER" layoutX="321.0" layoutY="52.0" text="Blues" textAlignment="CENTER" textFill="#ff9100">
+      <Button alignment="CENTER" layoutX="490.0" layoutY="518.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" stylesheets="@Styles.css" text="Backlog" textAlignment="CENTER">
          <font>
-            <Font name="Nirmala UI Bold" size="64.0" />
-         </font>
-         <effect>
-            <DropShadow color="#461601" height="29.89" offsetY="5.0" radius="12.2225" />
-         </effect>
-      </Label>
-      <Button alignment="CENTER" layoutX="326.0" layoutY="346.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" stylesheets="@Styles.css" text="Backlog" textAlignment="CENTER">
-         <font>
-            <Font size="20.0" />
+            <Font name="Nirmala UI" size="24.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" layoutX="326.0" layoutY="422.0" minHeight="55.0" minWidth="150.0" mnemonicParsing="false" onMouseClicked="#handleSair" stylesheets="@Styles.css" text="Sair" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="490.0" layoutY="608.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleSair" stylesheets="@Styles.css" text="Sair" textAlignment="CENTER">
          <font>
-            <Font size="20.0" />
+            <Font name="Nirmala UI" size="24.0" />
          </font>
       </Button>
+      <ImageView fitHeight="160.0" fitWidth="300.0" layoutX="491.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../res/logo_blues.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,6 +19,8 @@ public class Controller  {
     @FXML
     private FlowPane novaHist;
     private int i = 0;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     public void handleSair(MouseEvent mouseEvent) {
         System.exit(0);
@@ -27,6 +30,23 @@ public class Controller  {
         Parent telaNS = FXMLLoader.load(getClass().getResource("novaSprint.fxml"));
         Scene sceneNS = new Scene(telaNS);
         Stage stageNS = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        // Para deixar a tela draggable
+        telaNS.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        telaNS.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stageNS.setX(event.getScreenX() - xOffset);
+                stageNS.setY(event.getScreenY() - yOffset);
+            }
+        });
+
         stageNS.setScene(sceneNS);
         stageNS.show();
     }
@@ -35,6 +55,23 @@ public class Controller  {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        // Para deixar a tela draggable
+        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+
         stage.setScene(scene);
         stage.show();
     }
