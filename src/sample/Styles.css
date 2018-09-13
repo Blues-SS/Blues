@@ -16,3 +16,11 @@
     -fx-border-color: #ff9100;
     -fx-border-width: 2;
 }
+
+.scroll-bar:vertical {
+    -fx-background-color: #fffcf7;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #FF9100;
+}
