@@ -12,12 +12,18 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import javafx.scene.control.ComboBox;
+import sample.utils.Conexao;
 
 import java.io.IOException;
+import java.sql.Statement;
 
 public class Controller  {
     @FXML
-    private FlowPane novaHist;
+    private FlowPane toDo;
+    @FXML
+    private FlowPane doing;
+    @FXML
+    private FlowPane done;
     private int i = 0;
     private double xOffset = 0;
     private double yOffset = 0;
@@ -87,7 +93,36 @@ public class Controller  {
     public void handleNovaHistoria(MouseEvent event) throws IOException {
         AnchorPane novaTela = FXMLLoader.load(getClass().getResource("novaHistoria.fxml"));
         novaTela.setId("Hist" + i);
-        novaHist.getChildren().add(novaTela);
+
+        // Para mover as histórias para outros pane (TO DO, DOING, DONE)
+        novaTela.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+            }
+        });
+        novaTela.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getScreenX() >= 754 && event.getScreenX() < 1168) {
+                    if(!doing.getChildren().contains(novaTela)) { // se já não estiver na pane DOING, adiciona
+                        doing.getChildren().add(novaTela);
+                    }
+                }
+                else if(event.getScreenX() >= 1168) {
+                    if(!done.getChildren().contains(novaTela)) { // se já não estiver na pane DONE, adiciona
+                        done.getChildren().add(novaTela);
+                    }
+                }
+                else if(event.getScreenX() < 752 && event.getScreenX() > 0) {
+                    if(!toDo.getChildren().contains(novaTela)) { // se já não estiver na pane TO DO, adiciona
+                        toDo.getChildren().add(novaTela);
+                    }
+                }
+            }
+        });
+
+        toDo.getChildren().add(novaTela);
         ComboBox teste = (ComboBox) novaTela.lookup("#histPts");
         teste.getItems().addAll(novaTela.getId());
         i++;

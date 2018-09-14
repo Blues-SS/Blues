@@ -28,7 +28,7 @@
       </TextField>
       <ScrollPane hbarPolicy="NEVER" layoutX="18.0" layoutY="161.0" maxHeight="1.7976931348623157E308" maxWidth="416.0" minHeight="533.0" minWidth="416.0" prefHeight="533.0" prefWidth="416.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;" stylesheets="@Styles.css">
          <content>
-            <FlowPane fx:id="novaHist" prefHeight="527.0" prefWidth="410.0" style="-fx-background-color: #fffcf7;" vgap="10.0">
+            <FlowPane fx:id="toDo" prefHeight="527.0" prefWidth="410.0" style="-fx-background-color: #fffcf7;" vgap="10.0">
                <padding>
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </padding>
@@ -42,7 +42,7 @@
       </Label>
       <ScrollPane hbarPolicy="NEVER" layoutX="432.0" layoutY="161.0" maxHeight="1.7976931348623157E308" maxWidth="416.0" minHeight="533.0" minWidth="416.0" prefHeight="533.0" prefWidth="416.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
          <content>
-            <FlowPane prefHeight="527.0" prefWidth="410.0" style="-fx-background-color: #fffcf7;" vgap="10.0">
+            <FlowPane fx:id="doing" prefHeight="527.0" prefWidth="410.0" style="-fx-background-color: #fffcf7;" vgap="10.0">
                <padding>
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </padding>
@@ -56,7 +56,7 @@
       </Label>
       <ScrollPane hbarPolicy="NEVER" layoutX="846.0" layoutY="161.0" maxHeight="1.7976931348623157E308" maxWidth="416.0" minHeight="533.0" minWidth="416.0" prefHeight="533.0" prefWidth="416.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
          <content>
-            <FlowPane prefHeight="527.0" prefWidth="410.0" style="-fx-background-color: #fffcf7;" vgap="10.0">
+            <FlowPane fx:id="done" prefHeight="527.0" prefWidth="410.0" style="-fx-background-color: #fffcf7;" vgap="10.0">
                <padding>
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </padding>
