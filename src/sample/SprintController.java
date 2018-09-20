@@ -44,7 +44,7 @@ public class SprintController implements Initializable {
     @FXML private TableColumn statusCL;
     ObservableList<Sprint> sprints;
 
-    private int posicionPersonaEnTabla;
+    private int pocisaoselecionada;
 
     @FXML private void Novo(ActionEvent event) {
         nomeTF.setText("");
@@ -66,20 +66,20 @@ public class SprintController implements Initializable {
     }
 
     @FXML private void Modificar(ActionEvent event) {
-        Sprint persona = new Sprint();
-        persona.nome.set(nomeTF.getText());
-        persona.datainicio.set(datainicioTF.getText());
-        persona.datafim.set(datafimTF.getText());
-        persona.status.set(statusTF.getText());
-        sprints.set(posicionPersonaEnTabla, persona);
+        Sprint minhaSprint = new Sprint();
+        minhaSprint.nome.set(nomeTF.getText());
+        minhaSprint.datainicio.set(datainicioTF.getText());
+        minhaSprint.datafim.set(datafimTF.getText());
+        minhaSprint.status.set(statusTF.getText());
+        sprints.set(pocisaoselecionada, minhaSprint);
     }
 
     @FXML private void Remover(ActionEvent event) {
-        sprints.remove(posicionPersonaEnTabla);
+        sprints.remove(pocisaoselecionada);
     }
 
     //detectar mudanças para apos clicar em algum dado carregar os mesmo nos TF
-    private final ListChangeListener<Sprint> selectorTablaPersonas =
+    private final ListChangeListener<Sprint> tabelaSprintSelecionada =
             new ListChangeListener<Sprint>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends Sprint> c) {
@@ -88,27 +88,27 @@ public class SprintController implements Initializable {
             };
 
 
-    public Sprint getTablaPersonasSeleccionada() {
+    public Sprint getdadostabelaSelecionada() {
         if (tableSprint != null) {
             List<Sprint> tabla = tableSprint.getSelectionModel().getSelectedItems();
             if (tabla.size() == 1) {
-                final Sprint competicionSeleccionada = tabla.get(0);
-                return competicionSeleccionada;
+                final Sprint Selecionada = tabla.get(0);
+                return Selecionada;
             }
         }
         return null;
     }
 
     private void carregadadosTF() {
-        final Sprint persona = getTablaPersonasSeleccionada();
-        posicionPersonaEnTabla = sprints.indexOf(persona);
+        final Sprint Sprintselecionada = getdadostabelaSelecionada();
+        pocisaoselecionada = sprints.indexOf(Sprintselecionada);
 
-        if (persona != null) {
+        if (Sprintselecionada != null) {
 
-            nomeTF.setText(persona.getNome());
-            datainicioTF.setText(persona.getDatainicio());
-            datafimTF.setText(persona.getDatafim());
-            statusTF.setText(persona.getStatus());
+            nomeTF.setText(Sprintselecionada.getNome());
+            datainicioTF.setText(Sprintselecionada.getDatainicio());
+            datafimTF.setText(Sprintselecionada.getDatafim());
+            statusTF.setText(Sprintselecionada.getStatus());
 
 
             ModificarBT.setDisable(false);
@@ -118,7 +118,7 @@ public class SprintController implements Initializable {
         }
     }
 
-    private void inicializarTablaPersonas() {
+    private void inicializartabela() {
         nomeCL.setCellValueFactory(new PropertyValueFactory<Sprint, String>("nome"));
         datainicioCL.setCellValueFactory(new PropertyValueFactory<Sprint, String>("datainicio"));
         datafimCL.setCellValueFactory(new PropertyValueFactory<Sprint, String>("datafim"));
@@ -132,23 +132,23 @@ public class SprintController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //iniciar tabela
-        this.inicializarTablaPersonas();
+        this.inicializartabela();
 
         ModificarBT.setDisable(true);
         RemoverBT.setDisable(true);
 
-        final ObservableList<Sprint> tablaPersonaSel = tableSprint.getSelectionModel().getSelectedItems();
-        tablaPersonaSel.addListener(selectorTablaPersonas);
+        final ObservableList<Sprint> tabelaselecionada = tableSprint.getSelectionModel().getSelectedItems();
+        tabelaselecionada.addListener(tabelaSprintSelecionada);
 
         //Exemplo para carregar tabela
-        //for (int i = 0; i < 5; i++) {
-        //    Sprint p1 = new Sprint();
-        //    p1.nome.set("1.0 SP " + i);
-        //    p1.datainicio.set("13/09/2018");
-        //    p1.datafim.set("28/09/2018");
-        //    p1.status.set("Em progresso");
-        //    sprints.add(p1);
-        //}
+        /*for (int i = 0; i < 5; i++) {
+            Sprint p1 = new Sprint();
+            p1.nome.set("1.0 SP " + i);
+            p1.datainicio.set("13/09/2018");
+            p1.datafim.set("28/09/2018");
+            p1.status.set("Em progresso");
+            sprints.add(p1);
+        }*/
     }
 
     public void handleVoltarmenu(MouseEvent event) throws IOException {
