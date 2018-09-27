@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane layoutX="18.0" layoutY="45.0" prefHeight="159.0" prefWidth="380.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TextField layoutX="21.0" layoutY="14.0" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" promptText="Nova História" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
+            <font>
+                <Font name="Nirmala UI" size="14.0" />
+            </font>
+        </TextField>
+        <Label layoutX="21.0" layoutY="56.0" text="Responsável">
+            <font>
+                <Font name="Nirmala UI" size="14.0" />
+            </font>
+        </Label>
+        <ComboBox layoutX="21.0" layoutY="76.0" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;" />
+        <Button layoutX="256.0" layoutY="111.0" maxHeight="35.0" minHeight="35.0" mnemonicParsing="false" prefHeight="35.0" text="Informações">
+            <font>
+                <Font name="Nirmala UI" size="14.0" />
+            </font>
+        </Button>
+        <ComboBox fx:id="histPts" layoutX="261.0" layoutY="14.0" minHeight="35.0" prefHeight="35.0" prefWidth="90.0" promptText="PTS" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;" />
+    </children>
+</AnchorPane>
