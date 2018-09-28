@@ -5,6 +5,8 @@ import sample.Sprint;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -126,17 +128,17 @@ public class SprintDAO {
             sql = sql +
                     " and status = '" + status + "'";
         }
-/*
-        Date dtInicio = (Date) filters.get("dtInicio");
-        Date dtFim = (Date) filters.get("dtFim");
+
+        LocalDate dtInicio = (LocalDate) filters.get("dtInicio");
+        LocalDate dtFim = (LocalDate) filters.get("dtFim");
 
         if (dtInicio != null && dtFim != null) {
 
-            String datas = " and dt_inicio <= dtInicio and dtInicio >= dtFim and dt_fim >= dtFim and dtFim <= dt_inicio";
-            datas.replaceAll("dtInicio", String.valueOf(dtInicio)).replaceAll("dtFim", String.valueOf(dtFim));
-            sql.concat(datas);
-        }
-*/
+            sql = sql +" and dt_inicio >=  "+"'"+dtInicio+"' "+"and dt_Inicio <= "+"'" +dtFim+"'" + " or dt_fim >= "+ "'"+dtFim+"'"+" and dt_fim <= "+ "'"+ dtFim +"'";
+
+            //           and dt_inicio >= '2017-01-01' and dt_Inicio <=  '2018-01-01' or dt_fim >= '2017-01-01' and dt_fim <=  '2019-01-01'
+      }
+
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 
         while (rs.next()) {
