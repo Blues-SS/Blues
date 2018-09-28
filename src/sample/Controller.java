@@ -12,8 +12,10 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import javafx.scene.control.ComboBox;
+import sample.utils.Conexao;
 
 import java.io.IOException;
+import java.sql.Statement;
 
 public class Controller  {
     @FXML
