@@ -117,14 +117,16 @@ public class SprintDAO {
 
         String nome = (String) filters.get("nome");
         if (!nome.isEmpty()) {
-            sql = sql +" and nome LIKE '%" + nome + "%'";
+            sql = sql +
+                    " and nome LIKE '%" + nome + "%'";
         }
 
-/*        String status = (String) filters.get("status");
+      String status = (String) filters.get("status");
         if (!status.isEmpty()) {
-            sql.concat(" and status = '" + status + "'");
+            sql = sql +
+                    " and status = '" + status + "'";
         }
-
+/*
         Date dtInicio = (Date) filters.get("dtInicio");
         Date dtFim = (Date) filters.get("dtFim");
 
