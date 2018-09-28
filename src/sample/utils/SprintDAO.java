@@ -117,10 +117,10 @@ public class SprintDAO {
 
         String nome = (String) filters.get("nome");
         if (!nome.isEmpty()) {
-            sql.concat(" and nome LIKE '%" + nome + "%'");
+            sql = sql +" and nome LIKE '%" + nome + "%'";
         }
 
-        String status = (String) filters.get("status");
+/*        String status = (String) filters.get("status");
         if (!status.isEmpty()) {
             sql.concat(" and status = '" + status + "'");
         }
@@ -134,7 +134,7 @@ public class SprintDAO {
             datas.replaceAll("dtInicio", String.valueOf(dtInicio)).replaceAll("dtFim", String.valueOf(dtFim));
             sql.concat(datas);
         }
-
+*/
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 
         while (rs.next()) {

@@ -12,11 +12,11 @@
     <children>
           <AnchorPane layoutX="14.0" layoutY="17.0" prefHeight="735.0" prefWidth="379.0">
               <children>
-                  <Button fx:id="ModificarBT" layoutX="66.0" layoutY="483.0" mnemonicParsing="false" onAction="#Modificar" prefHeight="26.0" prefWidth="234.0" text="Modificar">
+                  <Button fx:id="setFilterBT" layoutX="66.0" layoutY="483.0" mnemonicParsing="false" onAction="#setFilter" prefHeight="26.0" prefWidth="234.0" text="Pesquisar">
                <font>
                           <Font name="System Bold Italic" size="25.0" fx:id="x1" />
                </font></Button>
-                  <Button fx:id="RemoverBT" font="$x1" layoutX="66.0" layoutY="560.0" mnemonicParsing="false" onAction="#Remover" prefHeight="26.0" prefWidth="234.0" text="Remover" />
+                  <Button fx:id="RemoverBT" font="$x1" layoutX="66.0" layoutY="560.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="234.0" text="Remover" />
                   <Button fx:id="VoltarBT" font="$x1" layoutX="66.0" layoutY="643.0" mnemonicParsing="false" onMouseClicked="#handleVoltarmenu" prefHeight="26.0" prefWidth="234.0" text="Voltar">
                       <font>
                           <Font name="Nirmala UI" size="25.0" />
@@ -24,7 +24,8 @@
                   </Button>
                   <DatePicker fx:id="datainicioDT" layoutX="27.0" layoutY="330.0" prefHeight="36.0" prefWidth="143.0" />
                   <DatePicker fx:id="datafimDT" layoutX="201.0" layoutY="330.0" prefHeight="36.0" prefWidth="143.0" />
-                  <TextField fx:id="statusTF" layoutX="20.0" layoutY="269.0" prefHeight="25.0" prefWidth="326.0" />
+                  <TextField fx:id="statusTF" layoutX="27.0" layoutY="240.0" prefHeight="25.0"  prefWidth="326.0" />
+                  <TextField fx:id="nomeTF" layoutX="27.0" layoutY="174.0" prefHeight="25.0" prefWidth="326.0" />
               </children>
           </AnchorPane>
           <AnchorPane layoutX="888.0" layoutY="-96.0" prefHeight="545.0" prefWidth="9.0" />
