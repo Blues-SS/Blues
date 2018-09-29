@@ -1,7 +1,9 @@
 package sample.utils;
 
+import javafx.collections.ObservableList;
 import sample.Sprint;
 
+import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -114,31 +116,28 @@ public class SprintDAO {
 
         conexao.Conectar();
 
+        String sql2 = "";
         String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint " +
                 "where 1=1 ";
 
         String nome = (String) filters.get("nome");
-        if (!nome.isEmpty()) {
-            sql = sql +
-                    " and nome LIKE '%" + nome + "%'";
-        }
-
-      String status = (String) filters.get("status");
-        if (!status.isEmpty()) {
-            sql = sql +
-                    " and status = '" + status + "'";
-        }
-
+        String status = (String) filters.get("status");
         LocalDate dtInicio = (LocalDate) filters.get("dtInicio");
         LocalDate dtFim = (LocalDate) filters.get("dtFim");
 
+
+        if (!nome.isEmpty()) {
+            sql2 = " and nome LIKE '%" + nome + "%'";
+        }
+
+        if (!status.isEmpty()) {
+            sql2 = " and status = '" + status + "'";
+        }
+
         if (dtInicio != null && dtFim != null) {
-
-            sql = sql +" and dt_inicio >=  "+"'"+dtInicio+"' "+"and dt_Inicio <= "+"'" +dtFim+"'" + " or dt_fim >= "+ "'"+dtFim+"'"+" and dt_fim <= "+ "'"+ dtFim +"'";
-
-            //           and dt_inicio >= '2017-01-01' and dt_Inicio <=  '2018-01-01' or dt_fim >= '2017-01-01' and dt_fim <=  '2019-01-01'
+            sql2 = " and dt_inicio >=  "+"'"+dtInicio+"' "+"and dt_Inicio <= "+"'" +dtFim+"'" + " or dt_fim >= "+ "'"+dtFim+"'"+" and dt_fim <= "+ "'"+ dtFim +"'";
       }
-
+        sql = sql + sql2;
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 
         while (rs.next()) {
@@ -155,6 +154,11 @@ public class SprintDAO {
         }
         conexao.Desconectar();
 
+
+        if (list.size() == 0){
+            JOptionPane.showMessageDialog(null, "Nenhum dado encontrada para o filtro em questão!");
+        }
+
         return list;
     }
 
@@ -169,5 +173,4 @@ public class SprintDAO {
 
         return sprint;
     }
-
 }
