@@ -7,6 +7,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Sprint {
 
+    int idSprint;
+
     public SimpleIntegerProperty id = new SimpleIntegerProperty();
     public SimpleStringProperty nome = new SimpleStringProperty();
     //public SimpleStringProperty dataInicio = new SimpleStringProperty();
@@ -74,4 +76,8 @@ public class Sprint {
     public void setStatus(String status) {
         this.status.set(status);
     }
+
+    public  void setIDsprint(int ID) {this.idSprint = ID;}
+
+    public  int getIDSprint(){return this.idSprint;}
 }

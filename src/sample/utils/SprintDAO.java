@@ -1,10 +1,14 @@
 package sample.utils;
 
+import javafx.collections.ObservableList;
 import sample.Sprint;
 
+import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -112,31 +116,28 @@ public class SprintDAO {
 
         conexao.Conectar();
 
+        String sql2 = "";
         String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint " +
                 "where 1=1 ";
 
         String nome = (String) filters.get("nome");
+        String status = (String) filters.get("status");
+        LocalDate dtInicio = (LocalDate) filters.get("dtInicio");
+        LocalDate dtFim = (LocalDate) filters.get("dtFim");
+
+
         if (!nome.isEmpty()) {
-            sql = sql +
-                    " and nome LIKE '%" + nome + "%'";
+            sql2 = " and nome LIKE '%" + nome + "%'";
         }
 
-      String status = (String) filters.get("status");
         if (!status.isEmpty()) {
-            sql = sql +
-                    " and status = '" + status + "'";
+            sql2 = " and status = '" + status + "'";
         }
-/*
-        Date dtInicio = (Date) filters.get("dtInicio");
-        Date dtFim = (Date) filters.get("dtFim");
 
         if (dtInicio != null && dtFim != null) {
-
-            String datas = " and dt_inicio <= dtInicio and dtInicio >= dtFim and dt_fim >= dtFim and dtFim <= dt_inicio";
-            datas.replaceAll("dtInicio", String.valueOf(dtInicio)).replaceAll("dtFim", String.valueOf(dtFim));
-            sql.concat(datas);
-        }
-*/
+            sql2 = " and dt_inicio >=  "+"'"+dtInicio+"' "+"and dt_Inicio <= "+"'" +dtFim+"'" + " or dt_fim >= "+ "'"+dtFim+"'"+" and dt_fim <= "+ "'"+ dtFim +"'";
+      }
+        sql = sql + sql2;
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 
         while (rs.next()) {
@@ -153,6 +154,11 @@ public class SprintDAO {
         }
         conexao.Desconectar();
 
+
+        if (list.size() == 0){
+            JOptionPane.showMessageDialog(null, "Nenhum dado encontrada para o filtro em questão!");
+        }
+
         return list;
     }
 
@@ -167,5 +173,4 @@ public class SprintDAO {
 
         return sprint;
     }
-
 }
