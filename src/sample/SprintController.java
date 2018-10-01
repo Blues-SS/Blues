@@ -74,12 +74,15 @@ public class SprintController implements Initializable {
     @FXML
     private ComboBox<sprintStatusCB> CBstatus;
 
-    private List<sprintStatusCB> listsprintStatus = new ArrayList<>();
+
 
     ObservableList<sprintStatusCB> obsStatus;
 
     @FXML
     private void carregarComboBox() {
+
+        List<sprintStatusCB> listsprintStatus = new ArrayList<>();
+
         sprintStatusCB status1 = new sprintStatusCB(1, "");
         sprintStatusCB status2 = new sprintStatusCB(2, "Em andamento");
         sprintStatusCB status3 = new sprintStatusCB(3, "Concluído");
@@ -123,6 +126,9 @@ public class SprintController implements Initializable {
         sprintStatusCB sprintStatusCB = CBstatus.getSelectionModel().getSelectedItem();
 
         nomeTF.setText("");
+        carregarComboBox();
+        datafimDT.setValue(null);
+        datainicioDT.setValue(null);
 
     }
 
