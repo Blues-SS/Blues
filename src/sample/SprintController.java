@@ -80,15 +80,18 @@ public class SprintController implements Initializable {
 
     @FXML
     private void carregarComboBox() {
-        sprintStatusCB status1 = new sprintStatusCB(1, "Em andamento");
-        sprintStatusCB status2 = new sprintStatusCB(1, "Concluído");
+        sprintStatusCB status1 = new sprintStatusCB(1, "");
+        sprintStatusCB status2 = new sprintStatusCB(2, "Em andamento");
+        sprintStatusCB status3 = new sprintStatusCB(3, "Concluído");
 
         listsprintStatus.add(status1);
         listsprintStatus.add(status2);
+        listsprintStatus.add(status3);
 
         obsStatus =  FXCollections.observableArrayList(listsprintStatus);
 
         CBstatus.setItems(obsStatus);
+        CBstatus.setValue(status1);
     }
 
 
@@ -113,6 +116,14 @@ public class SprintController implements Initializable {
 
 
         tableSprint.setItems(convertToObservable(sprintDAO.findAllFilter(new Conexao(), map)));
+    }
+
+    @FXML
+    private void limpaFilter(ActionEvent event){
+        sprintStatusCB sprintStatusCB = CBstatus.getSelectionModel().getSelectedItem();
+
+        nomeTF.setText("");
+
     }
 
     private ObservableList<Sprint> getSprints() throws SQLException {
