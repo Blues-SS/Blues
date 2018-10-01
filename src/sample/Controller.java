@@ -108,11 +108,28 @@ public class Controller  {
     }
 
     public void handleSprint(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Sprints.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        Parent telaNS = FXMLLoader.load(getClass().getResource("Sprints.fxml"));
+        Scene sceneNS = new Scene(telaNS);
+        Stage stageNS = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        // Para deixar a tela draggable
+        telaNS.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        telaNS.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stageNS.setX(event.getScreenX() - xOffset);
+                stageNS.setY(event.getScreenY() - yOffset);
+            }
+        });
+
+        stageNS.setScene(sceneNS);
+        stageNS.show();
     }
 
     public void handleNovaHistoria(MouseEvent event) throws IOException {

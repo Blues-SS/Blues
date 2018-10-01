@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -8,48 +10,57 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #fffcf7;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintController">
+<AnchorPane id="AnchorPane" maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintController">
     <children>
-          <AnchorPane layoutX="948.0" layoutY="14.0" prefHeight="746.0" prefWidth="318.0">
+          <AnchorPane layoutX="12.0" layoutY="92.0" prefHeight="665.0" prefWidth="381.0" style="-fx-background-color: #ff9100;">
               <children>
-                  <Label layoutX="19.0" layoutY="10.0" text="Nome">
+                  <Button fx:id="setFilterBT" layoutX="74.0" layoutY="445.0" mnemonicParsing="false" onAction="#setFilter" prefHeight="26.0" prefWidth="234.0" style=" -fx-border-color: #fff;" text="Pesquisar">
+
+               <font>
+                          <Font name="System Bold Italic" size="25.0" fx:id="x1" />
+               </font></Button>
+                  <Button fx:id="limparFilterBT" layoutX="74.0" layoutY="546.0" mnemonicParsing="false" onAction="#limpaFilter" prefHeight="26.0" prefWidth="234.0" style=" -fx-border-color: #fff;" text="Limpar Filtro">
+
                       <font>
                           <Font name="System Bold Italic" size="25.0" fx:id="x1" />
+                      </font></Button>
+
+                  <DatePicker fx:id="datainicioDT" layoutX="27.0" layoutY="358.0" prefHeight="36.0" prefWidth="143.0" />
+                  <DatePicker fx:id="datafimDT" layoutX="222.0" layoutY="358.0" prefHeight="36.0" prefWidth="143.0" />
+                  <TextField fx:id="nomeTF" layoutX="27.0" layoutY="83.0" prefHeight="36.0" prefWidth="338.0" />
+                  <Label fx:id="NomeLB" layoutX="27.0" layoutY="33.0" text="Nome">
+
+                     <font>
+                          <Font name="System Bold Italic" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="StatusLB" layoutX="25.0" layoutY="171.0" text="Status">
+                      <font>
+                          <Font name="System Bold Italic" size="22.0" />
                       </font>
                   </Label>
+                  <Label fx:id="dataLB" layoutX="27.0" layoutY="304.0" text="Datas">
 
-                  <Label layoutX="25.0" layoutY="268.0" text="Status">
-               <font>
-                  <Font name="System Bold Italic" size="25.0" />
-               </font></Label>
-                  <Label layoutX="20.0" layoutY="178.0" text="Data de fim">
-               <font>
-                  <Font name="System Bold Italic" size="25.0" />
-               </font></Label>
-                  <Label font="$x1" layoutX="16.0" layoutY="91.0" text="Data de inicio" />
-                  <TextField fx:id="nomeTF" layoutX="23.0" layoutY="46.0" prefHeight="36.0" prefWidth="277.0" />
-                  <TextField fx:id="datainicioTF" layoutX="25.0" layoutY="135.0" prefHeight="36.0" prefWidth="277.0" />
-                  <TextField fx:id="datafimTF" layoutX="21.0" layoutY="232.0" prefHeight="36.0" prefWidth="277.0" />
-                  <TextField fx:id="statusTF" layoutX="23.0" layoutY="313.0" prefHeight="36.0" prefWidth="277.0" />
-                  <Button fx:id="AdicionarBT" font="$x1" layoutX="32.0" layoutY="375.0" mnemonicParsing="false" onAction="#Adicionar" prefHeight="26.0" prefWidth="234.0" text="Adicionar" />
-                  <Button fx:id="ModificarBT" font="$x1" layoutX="32.0" layoutY="450.0" mnemonicParsing="false" onAction="#Modificar" prefHeight="26.0" prefWidth="234.0" text="Modificar" />
-                  <Button fx:id="RemoverBT" font="$x1" layoutX="32.0" layoutY="525.0" mnemonicParsing="false" onAction="#Remover" prefHeight="26.0" prefWidth="234.0" text="Remover" />
-                  <Button fx:id="NovoBT" font="$x1" layoutX="32.0" layoutY="600.0" mnemonicParsing="false" onAction="#Novo" prefHeight="26.0" prefWidth="234.0" text="Novo" />
-                  <Button fx:id="VoltarBT" font="$x1" layoutX="32.0" layoutY="678.0" mnemonicParsing="false" onMouseClicked="#handleVoltarmenu" prefHeight="26.0" prefWidth="234.0" text="Voltar">
                       <font>
-                          <Font name="Nirmala UI" size="25.0" />
+                          <Font name="System Bold Italic" size="22.0" />
                       </font>
-                  </Button>
+                  </Label>
+            <ComboBox fx:id="CBstatus" layoutX="27.0" layoutY="225.0" prefHeight="36.0" prefWidth="338.0" />
               </children>
           </AnchorPane>
-            <TableView fx:id="tableSprint" layoutX="14.0" layoutY="11.0" prefHeight="746.0" prefWidth="907.0">
+          <AnchorPane layoutX="888.0" layoutY="-96.0" prefHeight="545.0" prefWidth="9.0" />
+            <TableView fx:id="tableSprint" layoutX="405.0" layoutY="92.0" prefHeight="665.0" prefWidth="852.0">
                 <columns>
                     <TableColumn fx:id="nomeCL" prefWidth="183.0" text="Nome" />
-                    <TableColumn fx:id="datainicioCL" prefWidth="228.0" text="Data de inicio" />
-                    <TableColumn fx:id="datafimCL" prefWidth="230.0" text="Data de fim" />
-                    <TableColumn fx:id="statusCL" prefWidth="263.0" text="Status" />
+                    <TableColumn fx:id="datainicioCL" prefWidth="265.0" text="Data de inicio" />
+                    <TableColumn fx:id="datafimCL" prefWidth="237.0" text="Data de fim" />
+                    <TableColumn fx:id="statusCL" prefWidth="165.0" text="Status" />
                 </columns>
             </TableView>
-          <AnchorPane layoutX="888.0" layoutY="-96.0" prefHeight="545.0" prefWidth="9.0" />
+            <Button fx:id="NovoBT" font="$x1" layoutX="1129.0" layoutY="17.0" mnemonicParsing="false" onAction="#Novo" prefHeight="25.0" prefWidth="128.0" text="Novo" />
+            <Button fx:id="EditarBT" font="$x1" layoutX="985.0" layoutY="17.0" mnemonicParsing="false" onAction="#Editar" prefHeight="58.0" prefWidth="128.0" text="Editar" />
+            <Button fx:id="VoltarBT" font="$x1" layoutX="12.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#handleVoltarmenu" prefHeight="58.0" prefWidth="207.0" style="-fx-border-radius: 8;" text="Voltar" />
+
+
     </children>
 </AnchorPane>
