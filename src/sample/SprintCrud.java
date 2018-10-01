@@ -12,12 +12,10 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import javafx.scene.control.ComboBox;
-import sample.utils.Conexao;
 
 import java.io.IOException;
-import java.sql.Statement;
 
-public class Controller  {
+public class SprintCrud {
     @FXML
     private FlowPane toDo;
     @FXML
@@ -33,7 +31,7 @@ public class Controller  {
     }
 
     public void handleNovaSprint(MouseEvent event) throws IOException {
-        Parent telaNS = FXMLLoader.load(getClass().getResource("novaSprint.fxml"));
+        Parent telaNS = FXMLLoader.load(getClass().getResource("SprintCrud.fxml"));
         Scene sceneNS = new Scene(telaNS);
         Stage stageNS = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -58,7 +56,7 @@ public class Controller  {
     }
 
     public void handleVoltar(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -108,7 +106,7 @@ public class Controller  {
     }
 
     public void handleSprint(MouseEvent event) throws IOException {
-        Parent telaNS = FXMLLoader.load(getClass().getResource("Sprints.fxml"));
+        Parent telaNS = FXMLLoader.load(getClass().getResource("SprintList.fxml"));
         Scene sceneNS = new Scene(telaNS);
         Stage stageNS = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -133,7 +131,7 @@ public class Controller  {
     }
 
     public void handleNovaHistoria(MouseEvent event) throws IOException {
-        AnchorPane novaTela = FXMLLoader.load(getClass().getResource("novaHistoria.fxml"));
+        AnchorPane novaTela = FXMLLoader.load(getClass().getResource("Historia.fxml"));
         novaTela.setId("Hist" + i);
 
         // Para mover as histórias para outros pane (TO DO, DOING, DONE)

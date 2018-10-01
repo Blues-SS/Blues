@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import sample.utils.Conexao;
 import sample.utils.SprintDAO;
 
-public class SprintController implements Initializable {
+public class SprintListController implements Initializable {
 
     // DECLARAÇÃO DOS COMPONENTES DA TELA
     @FXML
@@ -202,7 +202,7 @@ public class SprintController implements Initializable {
         final int idsprint = getidlinhaselecionada();
 
 
-        Parent telaNS = FXMLLoader.load(getClass().getResource("novaSprint.fxml"));
+        Parent telaNS = FXMLLoader.load(getClass().getResource("SprintCrud.fxml"));
         Scene sceneNS = new Scene(telaNS);
         Stage stageNS = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -227,7 +227,7 @@ public class SprintController implements Initializable {
     }
 
     public void handleVoltarmenu(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -236,7 +236,7 @@ public class SprintController implements Initializable {
 
     @FXML
     private void Novo(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("novaSprint.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("SprintCrud.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
