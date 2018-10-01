@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #fffcf7;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #fffcf7;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Button alignment="CENTER" layoutX="491.0" layoutY="428.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleSprint" stylesheets="@Styles.css" text="Sprints" textAlignment="CENTER">
          <font>
@@ -18,12 +18,7 @@
             <Font name="Nirmala UI" size="24.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" layoutX="490.0" layoutY="518.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleBacklog" stylesheets="@Styles.css" text="Backlog" textAlignment="CENTER">
-         <font>
-            <Font name="Nirmala UI" size="24.0" />
-         </font>
-      </Button>
-      <Button alignment="CENTER" layoutX="490.0" layoutY="608.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleSair" stylesheets="@Styles.css" text="Sair" textAlignment="CENTER">
+      <Button alignment="CENTER" layoutX="490.0" layoutY="521.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleSair" stylesheets="@Styles.css" text="Sair" textAlignment="CENTER">
          <font>
             <Font name="Nirmala UI" size="24.0" />
          </font>
