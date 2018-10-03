@@ -29,6 +29,8 @@ public class SprintDAO {
 
     private Date dtFim;
 
+    private List<HistoriaDAO> historias;
+
     public Integer getIdSprint() {
         return idSprint;
     }
@@ -83,6 +85,14 @@ public class SprintDAO {
 
     public void setDtFim(Date dtFim) {
         this.dtFim = dtFim;
+    }
+
+    public List<HistoriaDAO> getHistorias() {
+        return historias;
+    }
+
+    public void setHistorias(List<HistoriaDAO> historias) {
+        this.historias = historias;
     }
 
     public List<Sprint> findAll(Conexao conexao) throws SQLException {
@@ -172,5 +182,30 @@ public class SprintDAO {
         sprint.setDataFim(sprintDAO.getDtFim());
 
         return sprint;
+    }
+
+
+        public SprintDAO findOne(Conexao conexao, Integer idSprint) throws SQLException {
+            SprintDAO sprint = new SprintDAO();
+
+            conexao.Conectar();
+
+            String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint " +
+                    "where id_sprint = "+ idSprint;
+
+            ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+            sprint.setIdSprint(idSprint);
+            sprint.setDsSprint(rs.getString("nome"));
+            sprint.setStatus(rs.getString("status"));
+            //TODO: fazer os set da string de cima
+
+            sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));
+
+
+            conexao.Desconectar();
+
+            return sprint;
+        }
     }
 }

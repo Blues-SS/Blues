@@ -171,10 +171,6 @@ public class SprintListController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 
     @FXML

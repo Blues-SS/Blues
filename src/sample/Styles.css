@@ -15,7 +15,7 @@
 .button:pressed {
     -fx-background-color: #FF9100;
     -fx-border-color: #ff9100;
-    -fx-border-width: g;
+    -fx-border-width: 2;
 }
 
 .scroll-bar:vertical {
