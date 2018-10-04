@@ -152,6 +152,6 @@ public class HistoriaDAO {
             + "'" + historiaDAO.getDtAlteracao() + "',"
             + "descricao = "
             + "'" + historiaDAO.getDescricao() + "',"
-            + ") WHERE ID_HISTORIA  = " + historiaDAO.getIdHistoria();
+            + ") WHERE ID_HISTORIA  = " + historiaDAO.getIdHistoria(); //oi breda
     }
 }
