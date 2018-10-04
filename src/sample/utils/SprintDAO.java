@@ -198,7 +198,10 @@ public class SprintDAO {
         sprint.setIdSprint(idSprint);
         sprint.setDsSprint(rs.getString("nome"));
         sprint.setStatus(rs.getString("status"));
-        //TODO: fazer os set da string de cima
+        sprint.setDtInicio(rs.getDate("dt_inicio"));
+        sprint.setDtFim(rs.getDate("dt_fim"));
+        sprint.setDtCriacao(rs.getDate("dt_criacao"));
+        sprint.setDtCriacao(rs.getDate("dt_alteracao"));
 
         sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));
 
