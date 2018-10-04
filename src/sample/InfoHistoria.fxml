@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="infoHistoria" layoutX="282.0" layoutY="210.0" prefHeight="429.0" prefWidth="727.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintCrud">
+    <children>
+        <TextArea layoutX="21.0" layoutY="141.0" prefHeight="225.0" prefWidth="686.0" wrapText="true">
+         <font>
+            <Font name="Nirmala UI" size="16.0" />
+         </font></TextArea>
+        <Button fx:id="infoSalvar" layoutX="541.0" layoutY="380.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="83.0" stylesheets="@Styles.css" text="Salvar">
+            <font>
+                <Font name="Nirmala UI" size="14.0" />
+            </font>
+        </Button>
+        <Button fx:id="infoCancel" layoutX="630.0" layoutY="380.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="83.0" stylesheets="@Styles.css" text="Cancelar">
+            <font>
+                <Font name="Nirmala UI" size="14.0" />
+            </font>
+        </Button>
+        <Label layoutX="21.0" layoutY="14.0" text="Título:">
+            <font>
+                <Font name="Nirmala UI Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label layoutX="256.0" layoutY="67.0" text="Value Business:">
+            <font>
+                <Font name="Nirmala UI Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label layoutX="21.0" layoutY="67.0" text="Pontos:">
+            <font>
+                <Font name="Nirmala UI Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label layoutX="328.0" layoutY="110.0" text="Descrição">
+            <font>
+                <Font name="Nirmala UI Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="valorTit" layoutX="74.0" layoutY="14.0" text="none">
+            <font>
+                <Font name="Nirmala UI" size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="valorPts" layoutX="83.0" layoutY="67.0" text="none">
+            <font>
+                <Font name="Nirmala UI" size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="valorBus" layoutX="375.0" layoutY="67.0" text="none">
+            <font>
+                <Font name="Nirmala UI" size="16.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -22,6 +25,10 @@ public class SprintCrud {
     private FlowPane doing;
     @FXML
     private FlowPane done;
+    @FXML
+    private AnchorPane mainSprint;
+    @FXML
+    private AnchorPane main;
     private int i = 0;
     private double xOffset = 0;
     private double yOffset = 0;
@@ -162,9 +169,45 @@ public class SprintCrud {
             }
         });
 
+        ComboBox histPts = (ComboBox) novaTela.lookup("#histPts");
+        histPts.getItems().addAll(1,2,3,5,8,13);
+        ComboBox valueBus = (ComboBox) novaTela.lookup("#valueBus");
+        valueBus.getItems().addAll(1000,3000,5000);
+        TextField tituloHist = (TextField) novaTela.lookup("#tituloHist");
+        Button histBtn = (Button) novaTela.lookup("#histBtn");
+
+        // PARA TELA DE INFORMAÇÕES
+        histBtn.setOnAction(actionEvent -> {
+            AnchorPane infoTela = null;
+            try {
+                infoTela = FXMLLoader.load(getClass().getResource("InfoHistoria.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Label valorTit = (Label) infoTela.lookup("#valorTit");
+            valorTit.setText(tituloHist.getText());
+            Label valorPts = (Label) infoTela.lookup("#valorPts");
+            if(histPts.getSelectionModel().isEmpty() == false)
+                valorPts.setText(histPts.getSelectionModel().getSelectedItem().toString());
+            Label valorBus = (Label) infoTela.lookup("#valorBus");
+            if(valueBus.getSelectionModel().isEmpty() == false)
+                valorBus.setText(valueBus.getSelectionModel().getSelectedItem().toString());
+
+            mainSprint.setStyle("-fx-background-color: rgba(128, 128, 128, 0.4)");
+            mainSprint.setDisable(false);
+            mainSprint.setVisible(true);
+            mainSprint.getChildren().addAll(infoTela);
+
+            Button infoCancel = (Button) infoTela.lookup("#infoCancel");
+            infoCancel.setOnAction(actionEvent2 -> {
+                mainSprint.getChildren().remove(mainSprint.lookup("#infoHistoria"));
+                mainSprint.setDisable(true);
+                mainSprint.setVisible(false);
+            });
+        });
+        // ACABOU CÓDIGO DA TELA DE INFO
+
         toDo.getChildren().add(novaTela);
-        ComboBox teste = (ComboBox) novaTela.lookup("#histPts");
-        teste.getItems().addAll(novaTela.getId());
         i++;
     }
 }
