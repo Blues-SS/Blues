@@ -203,7 +203,7 @@ public class SprintDAO {
         sprint.setDtCriacao(rs.getDate("dt_criacao"));
         sprint.setDtCriacao(rs.getDate("dt_alteracao"));
 
-        sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));
+        sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));//o
 
 
         conexao.Desconectar();
