@@ -128,10 +128,30 @@ public class HistoriaDAO {
     }
 
     private static void create(Conexao conexao, HistoriaDAO historiaDAO) {
-     //TODO:   //INSERT INTO HISTORIA (ID_SPRINT, ID_STATUS, NOME, DT_INICIO, DT_FIM) VALUES (historiaDAO.get...)
+    String sql = "INSERT INTO HISTORIA (ID_SPRINT, ID_STATUS, NOME, DT_CRIACAO, DT_ALTERACAO, DESCRICAO) VALUES ("
+             + historiaDAO.getIdSprint() + ","
+             + historiaDAO.getIdStatus() + ","
+             + "'" + historiaDAO.getNome() + "',"
+             + "'" + historiaDAO.getDtCriacao() + "',"
+             + "'" + historiaDAO.getDtAlteracao() + "',"
+             + "'" + historiaDAO.getDescricao() + "',";
+
+
     }
 
     private static void update(Conexao conexao, HistoriaDAO historiaDAO) {
-   // TODO:    //UPDATE HISTORIA SET () WHERE ID_HISTORIA  = historiaDAO.getIdHistoria
+    String sql = "UPDATE HISTORIA SET (id_sprint = "
+            + historiaDAO.getIdSprint() + ","
+            + "id_status = "
+            + historiaDAO.getIdStatus() + ","
+            + "nome = "
+            + "'" + historiaDAO.getNome() + "',"
+            + "dt_criacao = "
+            + "'" + historiaDAO.getDtCriacao() + "',"
+            + "dt_alteracao = "
+            + "'" + historiaDAO.getDtAlteracao() + "',"
+            + "descricao = "
+            + "'" + historiaDAO.getDescricao() + "',"
+            + ") WHERE ID_HISTORIA  = " + historiaDAO.getIdHistoria();
     }
 }

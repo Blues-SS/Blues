@@ -145,8 +145,8 @@ public class SprintDAO {
         }
 
         if (dtInicio != null && dtFim != null) {
-            sql2 = " and dt_inicio >=  "+"'"+dtInicio+"' "+"and dt_Inicio <= "+"'" +dtFim+"'" + " or dt_fim >= "+ "'"+dtFim+"'"+" and dt_fim <= "+ "'"+ dtFim +"'";
-      }
+            sql2 = " and dt_inicio >=  " + "'" + dtInicio + "' " + "and dt_Inicio <= " + "'" + dtFim + "'" + " or dt_fim >= " + "'" + dtFim + "'" + " and dt_fim <= " + "'" + dtFim + "'";
+        }
         sql = sql + sql2;
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 
@@ -165,7 +165,7 @@ public class SprintDAO {
         conexao.Desconectar();
 
 
-        if (list.size() == 0){
+        if (list.size() == 0) {
             JOptionPane.showMessageDialog(null, "Nenhum dado encontrada para o filtro em questão!");
         }
 
@@ -185,27 +185,27 @@ public class SprintDAO {
     }
 
 
-        public SprintDAO findOne(Conexao conexao, Integer idSprint) throws SQLException {
-            SprintDAO sprint = new SprintDAO();
+    public SprintDAO findOne(Conexao conexao, Integer idSprint) throws SQLException {
+        SprintDAO sprint = new SprintDAO();
 
-            conexao.Conectar();
+        conexao.Conectar();
 
-            String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint " +
-                    "where id_sprint = "+ idSprint;
+        String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint " +
+                "where id_sprint = " + idSprint;
 
-            ResultSet rs = conexao.getStmt().executeQuery(sql);
+        ResultSet rs = conexao.getStmt().executeQuery(sql);
 
-            sprint.setIdSprint(idSprint);
-            sprint.setDsSprint(rs.getString("nome"));
-            sprint.setStatus(rs.getString("status"));
-            //TODO: fazer os set da string de cima
+        sprint.setIdSprint(idSprint);
+        sprint.setDsSprint(rs.getString("nome"));
+        sprint.setStatus(rs.getString("status"));
+        //TODO: fazer os set da string de cima
 
-            sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));
+        sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));
 
 
-            conexao.Desconectar();
+        conexao.Desconectar();
 
-            return sprint;
-        }
+        return sprint;
     }
 }
+
