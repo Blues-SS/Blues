@@ -1,5 +1,8 @@
 package sample;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SprintCrud {
     @FXML
@@ -32,6 +36,15 @@ public class SprintCrud {
     private int i = 0;
     private double xOffset = 0;
     private double yOffset = 0;
+
+
+    ObservableList<Historias> historia;
+
+    public void initialize (){
+        historia = FXCollections.observableArrayList();
+        //pane.setItems(getSprints());
+    };
+
 
     public void handleSair(MouseEvent mouseEvent) {
         System.exit(0);
@@ -210,4 +223,7 @@ public class SprintCrud {
         toDo.getChildren().add(novaTela);
         i++;
     }
+
+
+
 }

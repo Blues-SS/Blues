@@ -29,6 +29,8 @@ public class SprintDAO {
 
     private Date dtFim;
 
+    private List<HistoriaDAO> historias;
+
     public Integer getIdSprint() {
         return idSprint;
     }
@@ -85,6 +87,14 @@ public class SprintDAO {
         this.dtFim = dtFim;
     }
 
+    public List<HistoriaDAO> getHistorias() {
+        return historias;
+    }
+
+    public void setHistorias(List<HistoriaDAO> historias) {
+        this.historias = historias;
+    }
+
     public List<Sprint> findAll(Conexao conexao) throws SQLException {
         List<Sprint> list = new ArrayList();
 
@@ -135,8 +145,8 @@ public class SprintDAO {
         }
 
         if (dtInicio != null && dtFim != null) {
-            sql2 = " and dt_inicio >=  "+"'"+dtInicio+"' "+"and dt_Inicio <= "+"'" +dtFim+"'" + " or dt_fim >= "+ "'"+dtFim+"'"+" and dt_fim <= "+ "'"+ dtFim +"'";
-      }
+            sql2 = " and dt_inicio >=  " + "'" + dtInicio + "' " + "and dt_Inicio <= " + "'" + dtFim + "'" + " or dt_fim >= " + "'" + dtFim + "'" + " and dt_fim <= " + "'" + dtFim + "'";
+        }
         sql = sql + sql2;
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 
@@ -155,7 +165,7 @@ public class SprintDAO {
         conexao.Desconectar();
 
 
-        if (list.size() == 0){
+        if (list.size() == 0) {
             JOptionPane.showMessageDialog(null, "Nenhum dado encontrada para o filtro em questão!");
         }
 
@@ -173,4 +183,29 @@ public class SprintDAO {
 
         return sprint;
     }
+
+
+    public SprintDAO findOne(Conexao conexao, Integer idSprint) throws SQLException {
+        SprintDAO sprint = new SprintDAO();
+
+        conexao.Conectar();
+
+        String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint " +
+                "where id_sprint = " + idSprint;
+
+        ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+        sprint.setIdSprint(idSprint);
+        sprint.setDsSprint(rs.getString("nome"));
+        sprint.setStatus(rs.getString("status"));
+        //TODO: fazer os set da string de cima
+
+        sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));
+
+
+        conexao.Desconectar();
+
+        return sprint;
+    }
 }
+
