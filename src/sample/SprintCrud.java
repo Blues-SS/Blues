@@ -56,7 +56,6 @@ public class SprintCrud {
 
     ;
 
-
     public void handleSair(MouseEvent mouseEvent) {
         System.exit(0);
     }

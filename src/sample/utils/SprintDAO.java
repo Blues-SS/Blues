@@ -1,16 +1,12 @@
 package sample.utils;
 
-import com.sun.jna.platform.win32.COM.COMBindingBaseObject;
-import javafx.collections.ObservableList;
 import sample.Sprint;
 
 import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -288,5 +284,26 @@ public class SprintDAO {
             e.printStackTrace();
         }
     }
+
+    public void update (Conexao conexao, SprintDAO sprintDAO) {
+        String sql = "UPDATE SPRINT SET (id_sprint = "
+                + sprintDAO.getIdSprint() + ","
+                + "id_status = "
+                + sprintDAO.getStatus() + ","
+                + "nome = "
+                + "'" + sprintDAO.getDsSprint() + "',"
+                + "dt_criacao = "
+                + "'" + sprintDAO.getDtCriacao() + "',"
+                + "dt_alteracao = "
+                + "'" + sprintDAO.getDtAlteracao() + "',"
+                + "dt_fim = "
+                + "'" + sprintDAO.getDtFim() + "',"
+                + "dt_inicio = "
+                + "'" + sprintDAO.getDtInicio() + "',"
+                + ") WHERE ID_SPRINT  = " + sprintDAO.getIdSprint();
+    }
 }
+
+
+
 
