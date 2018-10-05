@@ -143,11 +143,11 @@ public class SprintDAO {
         }
 
         if (!status.isEmpty()) {
-            sql2 = " and status = '" + status + "'";
+            sql2 = sql2 + " and status = '" + status + "'";
         }
 
         if (dtInicio != null && dtFim != null) {
-            sql2 = " and dt_inicio >=  " + "'" + dtInicio + "' " + "and dt_Inicio <= " + "'" + dtFim + "'" + " or dt_fim >= " + "'" + dtFim + "'" + " and dt_fim <= " + "'" + dtFim + "'";
+            sql2 = sql2 + " and dt_inicio >=  " + "'" + dtInicio + "' " + "and dt_Inicio <= " + "'" + dtFim + "'" + " or dt_fim >= " + "'" + dtFim + "'" + " and dt_fim <= " + "'" + dtFim + "'";
         }
         sql = sql + sql2;
         ResultSet rs = conexao.getStmt().executeQuery(sql);
@@ -158,7 +158,7 @@ public class SprintDAO {
             sprint.setDsSprint(rs.getString("nome"));
             sprint.setStatus(rs.getString("status"));
             sprint.setDtInicio(rs.getDate("dt_inicio"));
-            sprint.setDtFim(rs.getDate("dt_inicio"));
+            sprint.setDtFim(rs.getDate("dt_fim"));
             sprint.setDtCriacao(rs.getDate("dt_criacao"));
             sprint.setDtAlteracao(rs.getDate("dt_alteracao"));
 
