@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="infoHistoria" layoutX="282.0" layoutY="210.0" prefHeight="429.0" prefWidth="727.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintCrud">
     <children>
-        <TextArea layoutX="21.0" layoutY="141.0" prefHeight="225.0" prefWidth="686.0" wrapText="true">
+        <TextArea id="ta" layoutX="21.0" layoutY="141.0" prefHeight="225.0" prefWidth="686.0" wrapText="true" stylesheets="@Styles.css">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font></TextArea>

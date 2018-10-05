@@ -22,7 +22,7 @@
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Button>
-      <TextField layoutX="18.0" layoutY="27.0" maxHeight="60.0" maxWidth="830.0" minHeight="60.0" minWidth="830.0" prefHeight="60.0" prefWidth="830.0" promptText="Nova Sprint" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
+      <TextField fx:id="tituloSprint" layoutX="18.0" layoutY="27.0" maxHeight="60.0" maxWidth="830.0" minHeight="60.0" minWidth="830.0" prefHeight="60.0" prefWidth="830.0" promptText="Nova Sprint" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;">
          <font>
             <Font size="20.0" />
          </font>
@@ -69,18 +69,18 @@
             <Font name="Nirmala UI Bold" size="16.0" />
          </font>
       </Label>
-      <Button layoutX="989.0" layoutY="710.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Salvar">
+      <Button layoutX="989.0" layoutY="710.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#salvarNovaSprint" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Salvar">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Button>
-      <DatePicker layoutX="866.0" layoutY="62.0" prefHeight="25.0" prefWidth="116.0" />
+      <DatePicker fx:id="dataInicio" layoutX="866.0" layoutY="62.0" prefHeight="25.0" prefWidth="116.0" />
       <Label layoutX="887.0" layoutY="37.0" text="Data inicio">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Label>
-      <DatePicker layoutX="1003.0" layoutY="62.0" prefHeight="25.0" prefWidth="116.0" />
+      <DatePicker fx:id="dataFim" layoutX="1003.0" layoutY="62.0" prefHeight="25.0" prefWidth="116.0" />
       <Label layoutX="1024.0" layoutY="37.0" text="Data fim">
          <font>
             <Font name="Nirmala UI" size="16.0" />

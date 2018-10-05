@@ -17,6 +17,7 @@ public class HistoriaDAO {
     private String nome;
 
     private Integer valueBusiness;
+    private Integer pontos;
 
     private String descricao;
 
@@ -89,6 +90,13 @@ public class HistoriaDAO {
         this.dtAlteracao = dtAlteracao;
     }
 
+    public Integer getPontos() {
+        return pontos;
+    }
+
+    public void setPontos(Integer pontos) {
+        this.pontos = pontos;
+    }
 
     public static List<HistoriaDAO> findByIdSprint(Conexao conexao, Integer idSprint) throws SQLException {
         List<HistoriaDAO> historiaDAOS = new ArrayList<>();

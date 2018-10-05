@@ -1,5 +1,6 @@
 package sample.utils;
 
+import com.sun.jna.platform.win32.COM.COMBindingBaseObject;
 import javafx.collections.ObservableList;
 import sample.Sprint;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class SprintDAO {
 
     private Date dtFim;
 
-    private List<HistoriaDAO> historias;
+    private List<HistoriaDAO> historias = new ArrayList<>();
 
     public Integer getIdSprint() {
         return idSprint;
@@ -206,6 +208,30 @@ public class SprintDAO {
         conexao.Desconectar();
 
         return sprint;
+    }
+
+    public SprintDAO create(Conexao conexao, SprintDAO sprintDAO) {
+        try {
+
+            conexao.Conectar();
+
+            String sql = "INSERT INTO SPRINT (nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao) VALUES ('"
+                    + sprintDAO.getDsSprint() + "', '"
+                    + sprintDAO.getStatus() + "', '"
+                    + sprintDAO.getDtInicio() + "', '"
+                    + sprintDAO.getDtFim() + "',"
+                    + "current_timestamp, "
+                    + "current_timestamp)";
+
+            ResultSet resultSet = conexao.getStmt().executeQuery(sql);
+
+            sprintDAO.setIdSprint(resultSet.getInt("id_sprint"));
+
+            return sprintDAO;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
