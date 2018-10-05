@@ -45,7 +45,6 @@ public class SprintCrud {
         //pane.setItems(getSprints());
     };
 
-
     public void handleSair(MouseEvent mouseEvent) {
         System.exit(0);
     }
