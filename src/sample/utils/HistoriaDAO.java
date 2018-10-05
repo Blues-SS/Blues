@@ -163,3 +163,5 @@ public class HistoriaDAO {
             + ") WHERE ID_HISTORIA  = " + historiaDAO.getIdHistoria();
     }
 }
+
+
