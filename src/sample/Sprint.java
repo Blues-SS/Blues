@@ -11,7 +11,6 @@ public class Sprint {
 
     public SimpleIntegerProperty id = new SimpleIntegerProperty();
     public SimpleStringProperty nome = new SimpleStringProperty();
-    //public SimpleStringProperty dataInicio = new SimpleStringProperty();
     public SimpleObjectProperty dataInicio = new SimpleObjectProperty<>();
     public SimpleObjectProperty dataFim = new SimpleObjectProperty<>();
 
