@@ -224,11 +224,17 @@ public class SprintDAO {
                     + sprintDAO.getDtInicio() + "', '"
                     + sprintDAO.getDtFim() + "',"
                     + "current_timestamp, "
-                    + "current_timestamp)";
+                    + "current_timestamp) RETURNING id_sprint";
 
             ResultSet resultSet = conexao.getStmt().executeQuery(sql);
 
             sprintDAO.setIdSprint(resultSet.getInt("id_sprint"));
+
+            sprintDAO.getHistorias().forEach(historiaDAO -> {
+                historiaDAO.setIdSprint(Long.valueOf(sprintDAO.getIdSprint()));
+                historiaDAO.setIdHistoria(null);
+                HistoriaDAO.save(conexao, historiaDAO);
+            });
 
             return sprintDAO;
         } catch (SQLException e) {
