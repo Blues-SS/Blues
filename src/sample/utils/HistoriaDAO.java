@@ -1,5 +1,6 @@
 package sample.utils;
 
+import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -131,38 +132,59 @@ public class HistoriaDAO {
         if (historiaDAO.getIdHistoria() != null) {
             update(conexao, historiaDAO);
         } else {
-            create(conexao, historiaDAO);
+            historiaDAO = create(conexao, historiaDAO);
         }
 
         return historiaDAO;
     }
 
-    private static void create(Conexao conexao, HistoriaDAO historiaDAO) {
-        String sql = "INSERT INTO HISTORIA (ID_SPRINT, ID_STATUS, NOME, DT_CRIACAO, DT_ALTERACAO, DESCRICAO) VALUES ("
-                + historiaDAO.getIdSprint() + ","
-                + historiaDAO.getStatus() + ","
-                + "'" + historiaDAO.getNome() + "',"
-                + "'" + historiaDAO.getDtCriacao() + "',"
-                + "'" + historiaDAO.getDtAlteracao() + "',"
-                + "'" + historiaDAO.getDescricao() + "',";
+    private static HistoriaDAO create(Conexao conexao, HistoriaDAO historiaDAO) {
+        try {
+            conexao.Conectar();
 
+            String sql = "INSERT INTO HISTORIA (ID_SPRINT, STATUS, NOME, DT_CRIACAO, DT_ALTERACAO, DESCRICAO) VALUES ("
+                    + historiaDAO.getIdSprint() + ","
+                    + "'" + historiaDAO.getStatus() + "'" + ","
+                    + "'" + historiaDAO.getNome() + "',"
+                    + "current_timestamp,"
+                    + "current_timestamp,"
+                    + "'" + historiaDAO.getDescricao() + "')RETURNING id_historia";
 
+            ResultSet resultSet = conexao.getStmt().executeQuery(sql);
+
+            resultSet.next();
+            historiaDAO.setIdHistoria(resultSet.getLong("id_historia"));
+
+            return historiaDAO;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return historiaDAO;
     }
 
     private static void update(Conexao conexao, HistoriaDAO historiaDAO) {
-        String sql = "UPDATE HISTORIA SET (id_sprint = "
-                + historiaDAO.getIdSprint() + ","
-                + "id_status = "
-                + historiaDAO.getStatus() + ","
-                + "nome = "
-                + "'" + historiaDAO.getNome() + "',"
-                + "dt_criacao = "
-                + "'" + historiaDAO.getDtCriacao() + "',"
-                + "dt_alteracao = "
-                + "'" + historiaDAO.getDtAlteracao() + "',"
-                + "descricao = "
-                + "'" + historiaDAO.getDescricao() + "',"
-                + ") WHERE ID_HISTORIA  = " + historiaDAO.getIdHistoria();
+        try {
+            conexao.Conectar();
+
+            String sql = "UPDATE HISTORIA SET (id_sprint = "
+                    + historiaDAO.getIdSprint() + ","
+                    + "id_status = "
+                    + historiaDAO.getStatus() + ","
+                    + "nome = "
+                    + "'" + historiaDAO.getNome() + "',"
+                    + "dt_criacao = "
+                    + "'" + historiaDAO.getDtCriacao() + "',"
+                    + "dt_alteracao = "
+                    + "'" + historiaDAO.getDtAlteracao() + "',"
+                    + "descricao = "
+                    + "'" + historiaDAO.getDescricao() + "',"
+                    + ") WHERE ID_HISTORIA = " + historiaDAO.getIdHistoria();
+
+            conexao.getStmt().executeQuery(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 
