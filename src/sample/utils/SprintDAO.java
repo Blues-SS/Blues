@@ -1,5 +1,6 @@
 package sample.utils;
 
+import com.sun.jna.platform.win32.COM.COMBindingBaseObject;
 import javafx.collections.ObservableList;
 import sample.Sprint;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class SprintDAO {
 
     private Date dtFim;
 
-    private List<HistoriaDAO> historias;
+    private List<HistoriaDAO> historias = new ArrayList<>();
 
     public Integer getIdSprint() {
         return idSprint;
@@ -141,11 +143,11 @@ public class SprintDAO {
         }
 
         if (!status.isEmpty()) {
-            sql2 = " and status = '" + status + "'";
+            sql2 = sql2 + " and status = '" + status + "'";
         }
 
         if (dtInicio != null && dtFim != null) {
-            sql2 = " and dt_inicio >=  " + "'" + dtInicio + "' " + "and dt_Inicio <= " + "'" + dtFim + "'" + " or dt_fim >= " + "'" + dtFim + "'" + " and dt_fim <= " + "'" + dtFim + "'";
+            sql2 = sql2 + " and dt_inicio >=  " + "'" + dtInicio + "' " + "and dt_Inicio <= " + "'" + dtFim + "'" + " or dt_fim >= " + "'" + dtFim + "'" + " and dt_fim <= " + "'" + dtFim + "'";
         }
         sql = sql + sql2;
         ResultSet rs = conexao.getStmt().executeQuery(sql);
@@ -156,7 +158,7 @@ public class SprintDAO {
             sprint.setDsSprint(rs.getString("nome"));
             sprint.setStatus(rs.getString("status"));
             sprint.setDtInicio(rs.getDate("dt_inicio"));
-            sprint.setDtFim(rs.getDate("dt_inicio"));
+            sprint.setDtFim(rs.getDate("dt_fim"));
             sprint.setDtCriacao(rs.getDate("dt_criacao"));
             sprint.setDtAlteracao(rs.getDate("dt_alteracao"));
 
@@ -209,6 +211,36 @@ public class SprintDAO {
         conexao.Desconectar();
 
         return sprint;
+    }
+
+    public SprintDAO create(Conexao conexao, SprintDAO sprintDAO) {
+        try {
+
+            conexao.Conectar();
+
+            String sql = "INSERT INTO SPRINT (nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao) VALUES ('"
+                    + sprintDAO.getDsSprint() + "', '"
+                    + sprintDAO.getStatus() + "', '"
+                    + sprintDAO.getDtInicio() + "', '"
+                    + sprintDAO.getDtFim() + "',"
+                    + "current_timestamp, "
+                    + "current_timestamp) RETURNING id_sprint";
+
+            ResultSet resultSet = conexao.getStmt().executeQuery(sql);
+
+            sprintDAO.setIdSprint(resultSet.getInt("id_sprint"));
+
+            sprintDAO.getHistorias().forEach(historiaDAO -> {
+                historiaDAO.setIdSprint(Long.valueOf(sprintDAO.getIdSprint()));
+                historiaDAO.setIdHistoria(null);
+                HistoriaDAO.save(conexao, historiaDAO);
+            });
+
+            return sprintDAO;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
