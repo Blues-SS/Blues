@@ -296,7 +296,7 @@ public class SprintCrud {
     }
 
     public void salvarNovaSprint(MouseEvent event) throws SQLException {
-            sprintDAO.create()
+            //sprintDAO.create()
     }
 
     public void atualizaDadosHistoria(AnchorPane novaHistoria, String text, Integer business, Integer pts) {

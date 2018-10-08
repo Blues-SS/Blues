@@ -1,5 +1,6 @@
 package sample;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -7,6 +8,8 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -26,6 +29,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.utils.Conexao;
 import sample.utils.SprintDAO;
+
+import javax.print.StreamPrintService;
 
 public class SprintListController implements Initializable {
 
@@ -69,6 +74,7 @@ public class SprintListController implements Initializable {
     private double yOffset = 0;
     private SprintDAO sprintDAO = new SprintDAO();
     ObservableList<Sprint> sprints;
+    int linhaselecionada;
 
 
     @FXML
@@ -171,33 +177,54 @@ public class SprintListController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        final ObservableList<Sprint> tabelaSprintSelecionada = tableSprint.getSelectionModel().getSelectedItems();
+        tabelaSprintSelecionada.addListener(selectorTabelaSprint);
+
+        EditarBT.setDisable(true);
     }
 
+
+    private final ListChangeListener<Sprint> selectorTabelaSprint =
+            new ListChangeListener<Sprint>() {
+
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends Sprint> c) {
+                    final Sprint sprintselecionada = getidlinhaselecionada();
+                    linhaselecionada = sprints.indexOf(sprintselecionada);
+
+                    if (sprintselecionada != null) {
+                        System.out.println(sprintselecionada.getId());
+                        EditarBT.setDisable(false);
+                    }else{
+                        EditarBT.setDisable(true);
+                    }
+                }
+            };
+
     @FXML
-    public int getidlinhaselecionada() {
+    public Sprint getidlinhaselecionada() {
         if (tableSprint != null) {
             List<Sprint> tabela = tableSprint.getSelectionModel().getSelectedItems();
             if (tabela.size() == 1) {
-                final Sprint competicionSeleccionada = tabela.get(0);
-                int IDSprint = competicionSeleccionada.getId();
+                final Sprint Sprintlinhaselecionada = tabela.get(0);
+                int IDSprint = Sprintlinhaselecionada.getId();
 
                 //Sprint.setIDsprint(IDSprint);
                 //System.out.println(Sprint.getIDSprint());
 
-                return IDSprint;
+                return Sprintlinhaselecionada;
             }
         }
-        return 0;
+        return null;
     }
 
 
-        @FXML
+    @FXML
     private void Editar(ActionEvent event) throws IOException {
 
-        //ID ppara carregar os historias referente a ele
-        final int idsprint = getidlinhaselecionada();
 
-
+        //abrir tela do KANBAN
         Parent telaNS = FXMLLoader.load(getClass().getResource("SprintCrud.fxml"));
         Scene sceneNS = new Scene(telaNS);
         Stage stageNS = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -221,6 +248,7 @@ public class SprintListController implements Initializable {
         stageNS.setScene(sceneNS);
         stageNS.show();
     }
+
 
     public void handleVoltarmenu(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
