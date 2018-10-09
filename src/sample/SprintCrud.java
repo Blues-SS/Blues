@@ -1,7 +1,5 @@
 package sample;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -16,12 +14,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
+import sample.utils.Conexao;
 import sample.utils.HistoriaDAO;
 import sample.utils.SprintDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -48,6 +46,7 @@ public class SprintCrud {
 
     //    private HistoriaDAO historiaDAO;
     private static SprintDAO sprintDAO;
+    private static Conexao conexao = new Conexao();
     ObservableList<Historias> historia;
 
     public void initialize() {
@@ -56,7 +55,6 @@ public class SprintCrud {
     }
 
     ;
-
 
     public void handleSair(MouseEvent mouseEvent) {
         System.exit(0);
@@ -74,8 +72,8 @@ public class SprintCrud {
         DatePicker dataFim = (DatePicker) telaNS.lookup("#dataFim");
 
         tituloSprint.textProperty().addListener((observable, oldValue, newValue) -> {
-            java.sql.Date dateInicio = java.sql.Date.valueOf(dataInicio.getValue());
-            java.sql.Date dateFim = java.sql.Date.valueOf(dataFim.getValue());
+            java.sql.Date dateInicio = dataInicio.getValue() != null ? java.sql.Date.valueOf(dataInicio.getValue()): null;
+            java.sql.Date dateFim = dataFim.getValue() != null ? java.sql.Date.valueOf(dataFim.getValue()): null;
             atualizaDadosSPrint(newValue,
                     dateInicio,
                     dateFim);
@@ -83,7 +81,7 @@ public class SprintCrud {
 
         dataInicio.valueProperty().addListener((observable, oldValue, newValue) -> {
             String text = tituloSprint.getText();
-            java.sql.Date dateFim = java.sql.Date.valueOf(dataFim.getValue());
+            java.sql.Date dateFim = dataFim.getValue() != null ? java.sql.Date.valueOf(dataFim.getValue()): null;
             atualizaDadosSPrint(
                     text,
                     java.sql.Date.valueOf(newValue),
@@ -92,7 +90,7 @@ public class SprintCrud {
 
         dataFim.valueProperty().addListener((observable, oldValue, newValue) -> {
             String text = tituloSprint.getText();
-            java.sql.Date dateInicio = java.sql.Date.valueOf(dataInicio.getValue());
+            java.sql.Date dateInicio = dataInicio.getValue() != null ? java.sql.Date.valueOf(dataInicio.getValue()): null;
             atualizaDadosSPrint(
                     text,
                     dateInicio,
@@ -200,6 +198,7 @@ public class SprintCrud {
 
         HistoriaDAO historiaDAO = new HistoriaDAO();
         historiaDAO.setIdHistoria((long) i);
+        historiaDAO.setStatus("TODO");
         this.sprintDAO.getHistorias().add(historiaDAO);
 
         // Para mover as histórias para outros pane (TO DO, DOING, DONE)
@@ -215,14 +214,17 @@ public class SprintCrud {
                 if (event.getScreenX() >= 754 && event.getScreenX() < 1168) {
                     if (!doing.getChildren().contains(novaHistoria)) { // se já não estiver na pane DOING, adiciona
                         doing.getChildren().add(novaHistoria);
+                        atualizaStatusHistoria(novaHistoria, "DOING");
                     }
                 } else if (event.getScreenX() >= 1168) {
                     if (!done.getChildren().contains(novaHistoria)) { // se já não estiver na pane DONE, adiciona
                         done.getChildren().add(novaHistoria);
+                        atualizaStatusHistoria(novaHistoria, "DONE");
                     }
                 } else if (event.getScreenX() < 752 && event.getScreenX() > 0) {
                     if (!toDo.getChildren().contains(novaHistoria)) { // se já não estiver na pane TO DO, adiciona
                         toDo.getChildren().add(novaHistoria);
+                        atualizaStatusHistoria(novaHistoria, "TODO");
                     }
                 }
             }
@@ -239,7 +241,8 @@ public class SprintCrud {
             atualizaDadosHistoria(novaHistoria,
                     newValue,
                     business != null ? Integer.valueOf(business.toString()) : null,
-                    pts != null ? Integer.valueOf(pts.toString()) : null);
+                    pts != null ? Integer.valueOf(pts.toString()) : null,
+                    null);
         });
         valueBus.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             String text = tituloHist.getText();
@@ -247,7 +250,8 @@ public class SprintCrud {
             atualizaDadosHistoria(novaHistoria,
                     text,
                     newValue != null ? Integer.valueOf(newValue.toString()) : null,
-                    pts != null ? Integer.valueOf(pts.toString()) : null);
+                    pts != null ? Integer.valueOf(pts.toString()) : null,
+                    null);
         });
         histPts.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             String text = tituloHist.getText();
@@ -255,7 +259,8 @@ public class SprintCrud {
             atualizaDadosHistoria(novaHistoria,
                     text,
                     business != null ? Integer.valueOf(business.toString()) : null,
-                    newValue != null ? Integer.valueOf(newValue.toString()) : null);
+                    newValue != null ? Integer.valueOf(newValue.toString()) : null,
+                    null);
         });
         Button histBtn = (Button) novaHistoria.lookup("#histBtn");
 
@@ -276,13 +281,29 @@ public class SprintCrud {
             if (valueBus.getSelectionModel().isEmpty() == false)
                 valorBus.setText(valueBus.getSelectionModel().getSelectedItem().toString());
 
+            TextArea descrHist = (TextArea) infoTela.lookup("#descrHist");
+            Button infoSalvar = (Button) infoTela.lookup("#infoSalvar");
+            infoSalvar.setOnAction(actionEvent2 -> {
+                String text = tituloHist.getText();
+                Object business = valueBus.getSelectionModel().getSelectedItem();
+                Object pts = histPts.getSelectionModel().getSelectedItem();
+                atualizaDadosHistoria(novaHistoria,
+                        text,
+                        business != null ? Integer.valueOf(business.toString()) : null,
+                        pts != null ? Integer.valueOf(pts.toString()) : null,
+                        descrHist.getText());
+                mainSprint.getChildren().remove(mainSprint.lookup("#infoHistoria"));
+                mainSprint.setDisable(true);
+                mainSprint.setVisible(false);
+            });
+
             mainSprint.setStyle("-fx-background-color: rgba(128, 128, 128, 0.4)");
             mainSprint.setDisable(false);
             mainSprint.setVisible(true);
             mainSprint.getChildren().addAll(infoTela);
 
             Button infoCancel = (Button) infoTela.lookup("#infoCancel");
-            infoCancel.setOnAction(actionEvent2 -> {
+            infoCancel.setOnAction(actionEvent3 -> {
                 mainSprint.getChildren().remove(mainSprint.lookup("#infoHistoria"));
                 mainSprint.setDisable(true);
                 mainSprint.setVisible(false);
@@ -292,14 +313,32 @@ public class SprintCrud {
 
         toDo.getChildren().add(novaHistoria);
         i++;
-        System.out.println(i);
+    }
+
+    private void atualizaStatusHistoria(AnchorPane anchorPane, String status) {
+        AtomicReference<HistoriaDAO> historiaDAO = new AtomicReference<>(new HistoriaDAO());
+        AtomicReference<Integer> index = new AtomicReference<>();
+        String id = anchorPane.getId();
+        Long idLong = Long.valueOf(id.replaceAll("\\D", ""));
+        sprintDAO.getHistorias().forEach(historia -> {
+            if (historia.getIdHistoria() == idLong) {
+                index.set(sprintDAO.getHistorias().indexOf(historia));
+                historiaDAO.set(historia);
+            }
+        });
+        historiaDAO.get().setStatus(status);
     }
 
     public void salvarNovaSprint(MouseEvent event) throws SQLException {
-            //sprintDAO.create()
+        if(sprintDAO.getIdSprint() == null) {
+            sprintDAO = sprintDAO.create(conexao, sprintDAO);
+        }
+        else {
+            sprintDAO.update(conexao, sprintDAO);
+        }
     }
 
-    public void atualizaDadosHistoria(AnchorPane novaHistoria, String text, Integer business, Integer pts) {
+    public void atualizaDadosHistoria(AnchorPane novaHistoria, String text, Integer business, Integer pts, String descr) {
         HistoriaDAO historiaDAO = new HistoriaDAO();
         AtomicReference<Integer> index = new AtomicReference<>();
         String id = novaHistoria.getId();
@@ -307,19 +346,26 @@ public class SprintCrud {
         sprintDAO.getHistorias().forEach(historia -> {
             if (historia.getIdHistoria() == idLong) {
                 historiaDAO.setIdHistoria(historia.getIdHistoria());
-                historiaDAO.setDescricao(historia.getDescricao());
+                historiaDAO.setStatus(historia.getStatus());
+                historia.setDescricao(historia.getDescricao());
                 index.set(sprintDAO.getHistorias().indexOf(historia));
             }
         });
-        historiaDAO.setDescricao(text);
+        historiaDAO.setNome(text);
         historiaDAO.setValueBusiness(business);
         historiaDAO.setPontos(pts);
+        if(descr != null) {
+            historiaDAO.setDescricao(descr);
+        }
         sprintDAO.getHistorias().set(index.get(), historiaDAO);
     }
 
     public void atualizaDadosSPrint(String titulo, Date dtInicio, Date dtFim) {
         sprintDAO.setDsSprint(titulo);
-        sprintDAO.setDtInicio((java.sql.Date) dtInicio);
-        sprintDAO.setDtFim((java.sql.Date) dtFim);
+        if (sprintDAO.getStatus() == null) {
+            sprintDAO.setStatus("Em Andamento");
+        }
+        sprintDAO.setDtInicio(dtInicio != null ? (java.sql.Date) dtInicio : null);
+        sprintDAO.setDtFim(dtFim != null ? (java.sql.Date) dtFim : null);
     }
 }
