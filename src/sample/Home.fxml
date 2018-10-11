@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #fffcf7;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintCrud">
+   <children>
+      <Button alignment="CENTER" layoutX="490.0" layoutY="314.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleBacklog" stylesheets="@Styles.css" text="Backlog" textAlignment="CENTER">
+         <font>
+            <Font name="Nirmala UI" size="24.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" layoutX="492.0" layoutY="493.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleSprint" stylesheets="@Styles.css" text="Sprints" textAlignment="CENTER">
+         <font>
+            <Font name="Nirmala UI" size="24.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" layoutX="492.0" layoutY="403.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleNovaSprint" stylesheets="@Styles.css" text="Nova Sprint" textAlignment="CENTER">
+         <font>
+            <Font name="Nirmala UI" size="24.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" layoutX="491.0" layoutY="586.0" minHeight="70.0" minWidth="300.0" mnemonicParsing="false" onMouseClicked="#handleSair" stylesheets="@Styles.css" text="Sair" textAlignment="CENTER">
+         <font>
+            <Font name="Nirmala UI" size="24.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="160.0" fitWidth="300.0" layoutX="491.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../res/logo_blues.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
