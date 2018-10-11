@@ -167,6 +167,31 @@ public class SprintCrud {
         stageB.show();
     }
 
+    public void handleMetricas(MouseEvent event) throws IOException {
+        Parent telaB = FXMLLoader.load(getClass().getResource("Metricas.fxml"));
+        Scene sceneB = new Scene(telaB);
+        Stage stageB = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Para deixar a tela draggable
+        telaB.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        telaB.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stageB.setX(event.getScreenX() - xOffset);
+                stageB.setY(event.getScreenY() - yOffset);
+            }
+        });
+
+        stageB.setScene(sceneB);
+        stageB.show();
+    }
+
     public void handleSprint(MouseEvent event) throws IOException {
         Parent telaNS = FXMLLoader.load(getClass().getResource("SprintList.fxml"));
         Scene sceneNS = new Scene(telaNS);
