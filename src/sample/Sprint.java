@@ -75,8 +75,4 @@ public class Sprint {
     public void setStatus(String status) {
         this.status.set(status);
     }
-
-    public  void setIDsprint(int ID) {this.idSprint = ID;}
-
-    public  int getIDSprint(){return this.idSprint;}
 }

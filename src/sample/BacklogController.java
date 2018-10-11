@@ -1,71 +1,80 @@
 package sample;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sample.utils.Conexao;
+import sample.utils.HistoriaDAO;
+import sample.utils.SprintDAO;
 
-public class BacklogController implements  Initializable{
-    private double xOffset = 0;
-    private double yOffset = 0;
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.sql.SQLException;
+
+
+public class BacklogController {
 
     @FXML
-    private LineChart<?, ?> Burndown;
+    private Button cancelarBT;
+
+    int i = 0;
+    private static SprintDAO sprintDAO;
+    private static Conexao conexao = new Conexao();
+
+
+
 
     @FXML
-    private CategoryAxis x;
+    public void handleNovaHistoria(MouseEvent event) throws IOException {
+        AnchorPane novaHistoria = FXMLLoader.load(getClass().getResource("Historia.fxml"));
+        novaHistoria.setId("Hist" + i);
 
-    @FXML
-    private NumberAxis y;
+        HistoriaDAO historiaDAO = new HistoriaDAO();
+        historiaDAO.setIdHistoria((long) i);
+        historiaDAO.setStatus("TODO");
+        this.sprintDAO.getHistorias().add(historiaDAO);
 
-    @Override
-    public void initialize(URL url,ResourceBundle rb) {
-        XYChart.Series series = new XYChart.Series();
-        series.getData().add(new XYChart.Data("1", 23));
-        series.getData().add(new XYChart.Data("2", 13));
-        series.getData().add(new XYChart.Data("3", 20));
-        series.getData().add(new XYChart.Data("4", 25));
-        series.getData().add(new XYChart.Data("5", 10));
-        series.getData().add(new XYChart.Data("6", 11));
-
-        Burndown.getData().addAll(series);
+        /*novaHistoria.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getScreenX() >= 754 && event.getScreenX() < 1168) {
+                    if (!doing.getChildren().contains(novaHistoria)) { // se já não estiver na pane DOING, adiciona
+                        doing.getChildren().add(novaHistoria);
+                        atualizaStatusHistoria(novaHistoria, "DOING");
+                    }
+                } else if (event.getScreenX() >= 1168) {
+                    if (!done.getChildren().contains(novaHistoria)) { // se já não estiver na pane DONE, adiciona
+                        done.getChildren().add(novaHistoria);
+                        atualizaStatusHistoria(novaHistoria, "DONE");
+                    }
+                } else if (event.getScreenX() < 752 && event.getScreenX() > 0) {
+                    if (!toDo.getChildren().contains(novaHistoria)) { // se já não estiver na pane TO DO, adiciona
+                        toDo.getChildren().add(novaHistoria);
+                        atualizaStatusHistoria(novaHistoria, "TODO");
+                    }
+                }
+            }
+        });*/
     }
 
-    public void handleVoltar(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-        // Para deixar a tela draggable
-        root.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                xOffset = event.getSceneX();
-                yOffset = event.getSceneY();
-            }
-        });
-        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                stage.setX(event.getScreenX() - xOffset);
-                stage.setY(event.getScreenY() - yOffset);
-            }
-        });
+    public void salvarHist(MouseEvent event) throws SQLException {
+        //gravarNovaHistoria //atualizarNovaHist
+    }
 
-        stage.setScene(scene);
-        stage.show();
+    @FXML
+    public void cancelar(InputEvent e) {
+        //fechar tela somente
+        final Node source = (Node) e.getSource();
+        final Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
 }

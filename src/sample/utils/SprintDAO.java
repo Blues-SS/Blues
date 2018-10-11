@@ -284,24 +284,6 @@ public class SprintDAO {
             e.printStackTrace();
         }
     }
-
-    public void update (Conexao conexao, SprintDAO sprintDAO) {
-        String sql = "UPDATE SPRINT SET (id_sprint = "
-                + sprintDAO.getIdSprint() + ","
-                + "id_status = "
-                + sprintDAO.getStatus() + ","
-                + "nome = "
-                + "'" + sprintDAO.getDsSprint() + "',"
-                + "dt_criacao = "
-                + "'" + sprintDAO.getDtCriacao() + "',"
-                + "dt_alteracao = "
-                + "'" + sprintDAO.getDtAlteracao() + "',"
-                + "dt_fim = "
-                + "'" + sprintDAO.getDtFim() + "',"
-                + "dt_inicio = "
-                + "'" + sprintDAO.getDtInicio() + "',"
-                + ") WHERE ID_SPRINT  = " + sprintDAO.getIdSprint();
-    }
 }
 
 
