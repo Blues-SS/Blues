@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane layoutX="18.0" layoutY="45.0" prefHeight="159.0" prefWidth="380.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintCrud">
+<AnchorPane prefHeight="159.0" prefWidth="380.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintCrud">
     <children>
         <TextField fx:id="tituloHist" layoutX="21.0" layoutY="32.0" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" promptText="Nova História" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2; -fx-border-radius: 4px;">
             <font>
