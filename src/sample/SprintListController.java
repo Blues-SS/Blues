@@ -27,6 +27,8 @@ import javafx.stage.Stage;
 import sample.utils.Conexao;
 import sample.utils.SprintDAO;
 
+import javax.swing.*;
+
 public class SprintListController implements Initializable {
 
     // DECLARAÇÃO DOS COMPONENTES DA TELA
@@ -38,7 +40,6 @@ public class SprintListController implements Initializable {
     private Button NovoBT;
     @FXML
     private Button EditarBT;
-
 
 
     @FXML
@@ -75,7 +76,6 @@ public class SprintListController implements Initializable {
     private ComboBox<sprintStatusCB> CBstatus;
 
 
-
     ObservableList<sprintStatusCB> obsStatus;
 
     @FXML
@@ -91,12 +91,11 @@ public class SprintListController implements Initializable {
         listsprintStatus.add(status2);
         listsprintStatus.add(status3);
 
-        obsStatus =  FXCollections.observableArrayList(listsprintStatus);
+        obsStatus = FXCollections.observableArrayList(listsprintStatus);
 
         CBstatus.setItems(obsStatus);
         CBstatus.setValue(status1);
     }
-
 
 
     @FXML
@@ -110,7 +109,6 @@ public class SprintListController implements Initializable {
         LocalDate dtFim = datafimDT.getValue();
 
 
-
         Map<String, Object> map = new HashMap<>();
         map.put("nome", nome);
         map.put("status", status);
@@ -122,7 +120,7 @@ public class SprintListController implements Initializable {
     }
 
     @FXML
-    private void limpaFilter(ActionEvent event){
+    private void limpaFilter(ActionEvent event) {
         sprintStatusCB sprintStatusCB = CBstatus.getSelectionModel().getSelectedItem();
 
         nomeTF.setText("");
@@ -144,7 +142,6 @@ public class SprintListController implements Initializable {
 
         return sprints;
     }
-
 
 
     @FXML
@@ -174,33 +171,66 @@ public class SprintListController implements Initializable {
     }
 
     @FXML
-    public int getidlinhaselecionada() {
+    public Integer getidlinhaselecionada() {
         if (tableSprint != null) {
             List<Sprint> tabela = tableSprint.getSelectionModel().getSelectedItems();
             if (tabela.size() == 1) {
                 final Sprint competicionSeleccionada = tabela.get(0);
-                int IDSprint = competicionSeleccionada.getId();
-
-                //Sprint.setIDsprint(IDSprint);
-                //System.out.println(Sprint.getIDSprint());
-
-                return IDSprint;
+                return competicionSeleccionada.getId();
             }
         }
-        return 0;
+        return null;
     }
 
 
-        @FXML
-    private void Editar(ActionEvent event) throws IOException {
+    @FXML
+    private void Editar(ActionEvent event) throws Exception {
 
         //ID ppara carregar os historias referente a ele
-        final int idsprint = getidlinhaselecionada();
+        Integer idsprint = getidlinhaselecionada();
 
+        if (idsprint == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para editar");
+            return;
+        }
 
-        Parent telaNS = FXMLLoader.load(getClass().getResource("SprintCrud.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SprintCrud.fxml"));
+
+        Parent telaNS = fxmlLoader.load();
         Scene sceneNS = new Scene(telaNS);
-        Stage stageNS = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stageNS = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SprintCrud controller = fxmlLoader.getController();
+        controller.setIdSprintParam(idsprint);
+
+        TextField tituloSprint = (TextField) telaNS.lookup("#tituloSprint");
+        DatePicker dataInicio = (DatePicker) telaNS.lookup("#dataInicio");
+        DatePicker dataFim = (DatePicker) telaNS.lookup("#dataFim");
+
+        tituloSprint.textProperty().addListener((observable, oldValue, newValue) -> {
+            java.sql.Date dateInicio = dataInicio.getValue() != null ? java.sql.Date.valueOf(dataInicio.getValue()) : null;
+            java.sql.Date dateFim = dataFim.getValue() != null ? java.sql.Date.valueOf(dataFim.getValue()) : null;
+            controller.atualizaDadosSPrint(newValue,
+                    dateInicio,
+                    dateFim);
+        });
+
+        dataInicio.valueProperty().addListener((observable, oldValue, newValue) -> {
+            String text = tituloSprint.getText();
+            java.sql.Date dateFim = dataFim.getValue() != null ? java.sql.Date.valueOf(dataFim.getValue()) : null;
+            controller.atualizaDadosSPrint(
+                    text,
+                    java.sql.Date.valueOf(newValue),
+                    dateFim);
+        });
+
+        dataFim.valueProperty().addListener((observable, oldValue, newValue) -> {
+            String text = tituloSprint.getText();
+            java.sql.Date dateInicio = dataInicio.getValue() != null ? java.sql.Date.valueOf(dataInicio.getValue()) : null;
+            controller.atualizaDadosSPrint(
+                    text,
+                    dateInicio,
+                    java.sql.Date.valueOf(newValue));
+        });
 
         // Para deixar a tela draggable
         telaNS.setOnMousePressed(new EventHandler<MouseEvent>() {

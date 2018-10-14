@@ -34,7 +34,7 @@ public class Conexao {
 
     public void Conectar() {
         endereco = "jdbc:postgresql://localhost:5432/blues";
-        usuario = "bluesss";
+        usuario = "root";
         senha = "root";
         try {
             Class.forName("org.postgresql.Driver");
