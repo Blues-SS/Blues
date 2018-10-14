@@ -2,6 +2,7 @@ package sample.utils;
 
 import sample.Sprint;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -185,25 +186,15 @@ public class SprintDAO {
 
     public SprintDAO findOne(Conexao conexao, Integer idSprint) throws SQLException {
         SprintDAO sprint = new SprintDAO();
-
         conexao.Conectar();
 
         String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint " +
                 "where id_sprint = " + idSprint;
 
         ResultSet rs = conexao.getStmt().executeQuery(sql);
-
-        sprint.setIdSprint(idSprint);
-        sprint.setDsSprint(rs.getString("nome"));
-        sprint.setStatus(rs.getString("status"));
-        sprint.setDtInicio(rs.getDate("dt_inicio"));
-        sprint.setDtFim(rs.getDate("dt_fim"));
-        sprint.setDtCriacao(rs.getDate("dt_criacao"));
-        sprint.setDtCriacao(rs.getDate("dt_alteracao"));
-
-        sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));//o
-
-
+        rs.next();
+        sprint = mapper(rs, sprint.getHistorias());
+        sprint.setHistorias(HistoriaDAO.findByIdSprint(conexao, idSprint));
         conexao.Desconectar();
 
         return sprint;
@@ -214,10 +205,9 @@ public class SprintDAO {
 
             conexao.Conectar();
 
-            if(sprintDAO.getDtInicio() == null || sprintDAO.getDtFim() == null) {
+            if (sprintDAO.getDtInicio() == null || sprintDAO.getDtFim() == null) {
                 JOptionPane.showMessageDialog(null, "Data não selecionada!");
-            }
-            else {
+            } else {
 
                 String sql = "INSERT INTO SPRINT (nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao) VALUES ('"
                         + sprintDAO.getDsSprint() + "', '"
@@ -225,19 +215,17 @@ public class SprintDAO {
                         + sprintDAO.getDtInicio() + "', '"
                         + sprintDAO.getDtFim() + "',"
                         + "current_timestamp, "
-                        + "current_timestamp) RETURNING id_sprint";
+                        + "current_timestamp ) RETURNING *, id_sprint";
 
                 ResultSet resultSet = conexao.getStmt().executeQuery(sql);
 
                 resultSet.next();
-                sprintDAO.setIdSprint(resultSet.getInt("id_sprint"));
+                sprintDAO = mapper(resultSet, sprintDAO.getHistorias());
 
-                sprintDAO.getHistorias().forEach(historiaDAO -> {
-                    historiaDAO.setIdSprint(Long.valueOf(sprintDAO.getIdSprint()));
-                    historiaDAO.setIdHistoria(null);
-                    historiaDAO = HistoriaDAO.save(conexao, historiaDAO);
-                });
+                List<HistoriaDAO> newList = new ArrayList<>();
+                saveHistorias(conexao, sprintDAO, newList);
 
+                sprintDAO.setHistorias(newList);
                 return sprintDAO;
             }
         } catch (SQLException e) {
@@ -246,43 +234,63 @@ public class SprintDAO {
         return sprintDAO;
     }
 
-    public void update(Conexao conexao, SprintDAO sprintDAO) {
+    public SprintDAO update(Conexao conexao, SprintDAO sprintDAO) {
         try {
 
             conexao.Conectar();
 
-            if(sprintDAO.getDtInicio() == null || sprintDAO.getDtFim() == null) {
+            if (sprintDAO.getDtInicio() == null || sprintDAO.getDtFim() == null) {
                 JOptionPane.showMessageDialog(null, "Data não selecionada!");
-            }
-            else {
+            } else {
 
-                String sql = "UPDATE SPRINT SET (id_sprint = "
-                        + sprintDAO.getIdSprint() + ","
-                        + "id_status = "
-                        + sprintDAO.getStatus() + ","
-                        + "nome = "
-                        + "'" + sprintDAO.getDsSprint() + "',"
-                        + "dt_criacao = "
-                        + "'" + sprintDAO.getDtCriacao() + "',"
-                        + "dt_alteracao = "
-                        + "'" + sprintDAO.getDtAlteracao() + "',"
-                        + "dt_fim = "
-                        + "'" + sprintDAO.getDtFim() + "',"
-                        + "dt_inicio = "
-                        + "'" + sprintDAO.getDtInicio() + "',"
-                        + ") WHERE ID_SPRINT = " + sprintDAO.getIdSprint();
+                String sql = "UPDATE SPRINT SET " +
+                        "id_sprint = " + sprintDAO.getIdSprint() + ","
+                        + "status = '" + sprintDAO.getStatus() + "',"
+                        + "nome = '" + sprintDAO.getDsSprint() + "',"
+                        + "dt_alteracao = '" + sprintDAO.getDtAlteracao() + "',"
+                        + "dt_fim = '" + sprintDAO.getDtFim() + "',"
+                        + "dt_inicio = '" + sprintDAO.getDtInicio() + "'"
+                        + " WHERE ID_SPRINT = " + sprintDAO.getIdSprint()
+                        + " RETURNING *";
 
                 conexao.getStmt().executeQuery(sql);
 
-                sprintDAO.getHistorias().forEach(historiaDAO -> {
-                    historiaDAO.setIdSprint(Long.valueOf(historiaDAO.getIdSprint()));
-                    historiaDAO.setIdHistoria(null);
-                    HistoriaDAO.save(conexao, historiaDAO);
-                });
+                List<HistoriaDAO> newList = new ArrayList<>();
+                saveHistorias(conexao, sprintDAO, newList);
+
+                sprintDAO.setHistorias(newList);
+                return sprintDAO;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return sprintDAO;
+    }
+
+    private void saveHistorias(Conexao conexao, SprintDAO sprintDAO, List<HistoriaDAO> newList) {
+        sprintDAO.getHistorias().forEach(historiaDAO -> {
+            historiaDAO.setIdSprint(Long.valueOf(sprintDAO.getIdSprint()));
+            if (historiaDAO.getIdHistoria() < 1000) {
+                historiaDAO.setIdHistoria(null);
+            }
+            newList.add(historiaDAO.save(conexao, historiaDAO));
+        });
+    }
+
+    private SprintDAO mapper(ResultSet rs, List<HistoriaDAO> historias) throws SQLException {
+        SprintDAO sprint = new SprintDAO();
+
+        sprint.setIdSprint(rs.getInt("id_sprint"));
+        sprint.setDsSprint(rs.getString("nome"));
+        sprint.setStatus(rs.getString("status"));
+        sprint.setDtInicio(rs.getDate("dt_inicio"));
+        sprint.setDtFim(rs.getDate("dt_fim"));
+        sprint.setDtCriacao(rs.getDate("dt_criacao"));
+        sprint.setDtAlteracao(rs.getDate("dt_alteracao"));
+        sprint.setHistorias(historias);
+
+        return sprint;
     }
 }
 
