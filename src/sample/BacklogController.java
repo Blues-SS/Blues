@@ -22,6 +22,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -40,13 +41,34 @@ public class BacklogController {
     private static SprintDAO sprintDAO;
     private static Conexao conexao = new Conexao();
 
+
+    private HistoriaDAO historiaDAO = new HistoriaDAO();
+    ObservableList<Historias> historia;
+
     @FXML
     private FlowPane toDo;
 
-    ObservableList<Historias> historia;
 
-    public void initialize() {
+
+
+    private ObservableList<Historias> getHistoriaBacklog() throws SQLException {
+        return convertToObservable(historiaDAO.getHistoriaBacklog(new Conexao()));
+    }
+
+    private ObservableList<Historias> convertToObservable(List<Historias> list) {
+
+        ObservableList<Historias> sprints = FXCollections.observableArrayList();
+        historia.addAll(list);
+
+
+        return historia;
+    }
+
+    public void initialize() throws SQLException {
+
         historia = FXCollections.observableArrayList();
+
+        getHistoriaBacklog();
     }
 
 
@@ -130,8 +152,14 @@ public class BacklogController {
 
 
 
+            mainSprint.setStyle("-fx-background-color: rgba(128, 128, 128, 0.4)");
+            mainSprint.setDisable(false);
+            mainSprint.setVisible(true);
+            mainSprint.getChildren().addAll(infoTela);
+
             javafx.scene.control.TextArea descrHist = (javafx.scene.control.TextArea) infoTela.lookup("#descrHist");
             javafx.scene.control.Button infoSalvar = (javafx.scene.control.Button) infoTela.lookup("#infoSalvar");
+
             infoSalvar.setOnAction(actionEvent2 -> {
                 String text = tituloHist.getText();
                 Object business = valueBus.getSelectionModel().getSelectedItem();
@@ -146,10 +174,7 @@ public class BacklogController {
                 mainSprint.setVisible(false);
             });
 
-            mainSprint.setStyle("-fx-background-color: rgba(128, 128, 128, 0.4)");
-            mainSprint.setDisable(false);
-            mainSprint.setVisible(true);
-            mainSprint.getChildren().addAll(infoTela);
+
 
             javafx.scene.control.Button infoCancel = (javafx.scene.control.Button) infoTela.lookup("#infoCancel");
             infoCancel.setOnAction(actionEvent3 -> {

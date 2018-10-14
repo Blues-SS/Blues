@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="newhists" maxHeight="768.0" maxWidth="1280.0" minHeight="400.0" minWidth="750.0" prefHeight="472.0" prefWidth="750.0" style="-fx-background-color: #fffcf7;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
    <children>
-      <TextArea fx:id="descrHist" layoutX="31.0" layoutY="189.0" prefHeight="191.0" prefWidth="688.0" />
+      <TextArea fx:id="descrHist" layoutX="31.0" layoutY="146.0" prefHeight="234.0" prefWidth="688.0" />
       <Button fx:id="infoSalvar" layoutX="589.0" layoutY="402.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#salvarHist" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Salvar">
          <font>
             <Font name="Nirmala UI" size="16.0" />
@@ -33,19 +33,19 @@
          </font>
       </Label>
       <TextField layoutX="120.0" layoutY="29.0" prefHeight="32.0" prefWidth="255.0" />
-      <Label fx:id="ValueLB" layoutX="31.0" layoutY="125.0" prefHeight="40.0" prefWidth="157.0" text="value business">
+      <Label fx:id="ValueLB" layoutX="31.0" layoutY="88.0" prefHeight="40.0" prefWidth="153.0" text="value business">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
       <TextField layoutX="120.0" layoutY="29.0" prefHeight="32.0" prefWidth="255.0" />
-      <Label fx:id="PontosLB" layoutX="415.0" layoutY="129.0" text="Pontos">
+      <Label fx:id="PontosLB" layoutX="415.0" layoutY="88.0" text="Pontos">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <TextField layoutX="120.0" layoutY="29.0" prefHeight="32.0" prefWidth="255.0" />
-      <ComboBox fx:id="valueCB" layoutX="188.0" layoutY="130.0" prefHeight="32.0" prefWidth="186.0" />
-      <ComboBox fx:id="pontosCB" layoutX="502.0" layoutY="130.0" prefHeight="32.0" prefWidth="217.0" />
+      <TextField fx:id="tituloTF" layoutX="120.0" layoutY="29.0" prefHeight="32.0" prefWidth="264.0" />
+      <ComboBox fx:id="valueCB" layoutX="198.0" layoutY="88.0" prefHeight="32.0" prefWidth="186.0" />
+      <ComboBox fx:id="pontosCB" layoutX="502.0" layoutY="88.0" prefHeight="32.0" prefWidth="217.0" />
    </children>
 </AnchorPane>

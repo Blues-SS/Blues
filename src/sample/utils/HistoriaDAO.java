@@ -1,6 +1,7 @@
 package sample.utils;
 
-import javax.swing.*;
+import sample.Historias;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -127,6 +128,8 @@ public class HistoriaDAO {
         return historiaDAOS;
     }
 
+
+
     public static HistoriaDAO save(Conexao conexao, HistoriaDAO historiaDAO) {
 
         if (historiaDAO.getIdHistoria() != null) {
@@ -185,6 +188,52 @@ public class HistoriaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    //pegar id da sprint de backlog
+    public List<Historias> getHistoriaBacklog(Conexao conexao) throws SQLException {
+        List<Historias> list = new ArrayList();
+
+        conexao.Conectar();
+
+        String sql = "select * from historia where id_sprint = 6";
+
+        ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+        while (rs.next()) {
+            HistoriaDAO historia = new HistoriaDAO();
+
+            historia.setIdHistoria(rs.getLong("id_historia"));
+            historia.setIdSprint(rs.getLong("id_sprint"));
+            historia.setStatus(rs.getString("status"));
+            historia.setNome(rs.getString("nome"));
+            historia.setDescricao(rs.getString("descricao"));
+            historia.setValueBusiness(rs.getInt("value_business"));
+            historia.setPontos(rs.getInt("pontos"));
+            historia.setDtCriacao(rs.getDate("dt_criacao"));
+            historia.setDtAlteracao(rs.getDate("dt_alteracao"));
+
+            list.add(toInterface(historia));
+        }
+        conexao.Desconectar();
+
+        return list;
+    }
+
+    private Historias toInterface(HistoriaDAO historiaDAO) {
+        Historias historia = new Historias();
+
+        historia.setIdsprint(historiaDAO.getIdSprint());
+        historia.setIdhistoria(historiaDAO.getIdHistoria());
+        historia.setIdstatus(historiaDAO.getStatus());
+        historia.setNomehist(historiaDAO.getNome());
+        historia.setDescricao(historiaDAO.getDescricao());
+        historia.setValuebusiness(historiaDAO.getValueBusiness());
+        historia.setPontos(historiaDAO.getPontos());
+        historia.setDtcriacao(historiaDAO.getDtCriacao());
+        historia.setDtalteracao(historiaDAO.getDtAlteracao());
+
+        return historia;
     }
 }
 
