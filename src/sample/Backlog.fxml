@@ -15,6 +15,11 @@
             <Font name="Nirmala UI" size="16.0" />
         </font>
         </Button>
+        <Button fx:id="VoltarBT" layoutX="18.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#voltar" prefHeight="58.0" prefWidth="128.0" stylesheets="@Styles.css" text="Voltar">
+            <font>
+                <Font name="Nirmala UI" size="16.0" />
+            </font>
+        </Button>
         <ScrollPane fx:id="Scroll" hbarPolicy="NEVER" layoutX="18.0" layoutY="127.0" maxHeight="1.7976931348623157E308" maxWidth="1237.0" minHeight="533.0" minWidth="416.0" prefHeight="553.0" prefWidth="1237.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;" stylesheets="@Styles.css">
             <content>
                 <FlowPane fx:id="toDo" prefHeight="543.0" prefWidth="1233.0" style="-fx-background-color: #fffcf7;" vgap="10.0">
@@ -24,5 +29,6 @@
                 </FlowPane>
             </content>
         </ScrollPane>
+        <AnchorPane fx:id="mainSprint" disable="true" maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-position: center;" visible="false" />
     </children>
 </AnchorPane>
