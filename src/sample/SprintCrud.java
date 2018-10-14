@@ -53,7 +53,6 @@ public class SprintCrud {
         this.idSprintParam = idSprintParam;
     }
 
-    //    private HistoriaDAO historiaDAO;
     private SprintDAO sprintDAO = new SprintDAO();
     private static Conexao conexao = new Conexao();
     ObservableList<Historias> historia;
