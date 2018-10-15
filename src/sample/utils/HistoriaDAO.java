@@ -261,6 +261,27 @@ public class HistoriaDAO {
         return historia;
     }
 
+    public void newHistoria(Conexao conexao, String titulo, int business, int pts, String status, String descricao) {
+        try {
+            conexao.Conectar();
+
+            String sql = "INSERT INTO HISTORIA (ID_SPRINT, STATUS, NOME, PONTOS, VALUE_BUSINESS, DT_CRIACAO, DT_ALTERACAO, DESCRICAO) VALUES ("
+                    + 6 + ","
+                    + "'" + status + "'" + ","
+                    + "'" +titulo + "',"
+                    + pts + ","
+                    + business + ","
+                    + "current_timestamp,"
+                    + "current_timestamp,"
+                    + "'" + descricao + "')";
+
+            ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

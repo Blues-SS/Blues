@@ -21,7 +21,7 @@
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Button>
-       <ComboBox fx:id="CBstatus" layoutX="502.0" layoutY="28.0" prefHeight="36.0" prefWidth="217.0" />
+
       <Label fx:id="StatusLB" layoutX="418.0" layoutY="30.0" text="Status">
          <font>
             <Font name="System Bold Italic" size="22.0" />
@@ -44,8 +44,10 @@
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="tituloTF" layoutX="120.0" layoutY="29.0" prefHeight="32.0" prefWidth="264.0" />
+      <TextField fx:id="valorTit" layoutX="120.0" layoutY="29.0" prefHeight="32.0" prefWidth="264.0" />
       <ComboBox fx:id="valueCB" layoutX="198.0" layoutY="88.0" prefHeight="32.0" prefWidth="186.0" />
       <ComboBox fx:id="pontosCB" layoutX="502.0" layoutY="88.0" prefHeight="32.0" prefWidth="217.0" />
+       <ComboBox fx:id="statusCB" layoutX="502.0" layoutY="28.0" prefHeight="36.0" prefWidth="217.0" />
+      <TextField fx:id="idHistoriasTF" layoutX="12.0" layoutY="7.0" prefHeight="25.0" prefWidth="44.0" visible="true" />
    </children>
 </AnchorPane>

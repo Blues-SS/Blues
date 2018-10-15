@@ -22,6 +22,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -68,124 +69,139 @@ public class BacklogController {
 
         historia = FXCollections.observableArrayList();
 
-        getHistoriaBacklog();
-    }
-
-
-
-    public void handleNovaHistoria(MouseEvent event) throws IOException {
-        AnchorPane novaHistoria = FXMLLoader.load(getClass().getResource("historiaBacklog.fxml"));
-        novaHistoria.setId("Hist" + i);
-
-        //-----------------------
-        this.sprintDAO = new SprintDAO();
-
-
-
-        //-----------------------
-        HistoriaDAO historiaDAO = new HistoriaDAO();
-
-
-        historiaDAO.setIdHistoria((long) i);
-        historiaDAO.setStatus("TODO");
-        this.sprintDAO.getHistorias().add(historiaDAO);
-
-        ComboBox histPts = (ComboBox) novaHistoria.lookup("#histPts");
-        histPts.getItems().addAll(1, 2, 3, 5, 8, 13);
-        ComboBox valueBus = (ComboBox) novaHistoria.lookup("#valueBus");
-        valueBus.getItems().addAll(1000, 3000, 5000);
-        javafx.scene.control.TextField tituloHist = (javafx.scene.control.TextField) novaHistoria.lookup("#tituloHist");
-        tituloHist.textProperty().addListener((observable, oldValue, newValue) -> {
-            Object business = valueBus.getSelectionModel().getSelectedItem();
-            Object pts = histPts.getSelectionModel().getSelectedItem();
-            atualizaDadosHistoria(novaHistoria,
-                    newValue,
-                    business != null ? Integer.valueOf(business.toString()) : null,
-                    pts != null ? Integer.valueOf(pts.toString()) : null,
-                    null);
-        });
-
-        javafx.scene.control.Button histBtn = (javafx.scene.control.Button) novaHistoria.lookup("#histBtn");
-
-        //abrir informaçoes
-        histBtn.setOnAction(actionEvent -> {
-            AnchorPane infoTela = null;
+        /*getHistoriaBacklog().forEach(teste ->{
             try {
-                infoTela = FXMLLoader.load(getClass().getResource("newhistBacklog.fxml"));
+                newHistoria(teste);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        });*/
+    }
 
-            ComboBox pontosCB = (ComboBox) infoTela.lookup("#pontosCB");
-            pontosCB.getItems().addAll(1, 2, 3, 5, 8, 13);
-            ComboBox valueCB = (ComboBox) infoTela.lookup("#valueCB");
-            valueCB.getItems().addAll(1000, 3000, 5000);
-            javafx.scene.control.TextField tituloTF = (javafx.scene.control.TextField) infoTela.lookup("#tituloTF");
 
-            tituloTF.textProperty().addListener((observable, oldValue, newValue) -> {
-                Object business = valueCB.getSelectionModel().getSelectedItem();
-                Object pts = pontosCB.getSelectionModel().getSelectedItem();
+    public void handleNovaHistoria(MouseEvent event) throws IOException {
+        newHistoria(null);
+    }
+
+
+    public void newHistoria(Historias teste) throws IOException {
+
+            AnchorPane novaHistoria = FXMLLoader.load(getClass().getResource("historiaBacklog.fxml"));
+            novaHistoria.setId("Hist" + i);
+
+            //-----------------------
+            this.sprintDAO = new SprintDAO();
+            HistoriaDAO historiaDAO = new HistoriaDAO();
+            historiaDAO.setIdHistoria((long) i);
+            historiaDAO.setStatus("TODO");
+            this.sprintDAO.getHistorias().add(historiaDAO);
+
+
+            javafx.scene.control.TextField idHistoriaTF = (javafx.scene.control.TextField) novaHistoria.lookup("#idHistoriaTF");
+            ComboBox histPts = (ComboBox) novaHistoria.lookup("#histPts");
+            histPts.getItems().addAll(1, 2, 3, 5, 8, 13);
+            ComboBox valueBus = (ComboBox) novaHistoria.lookup("#valueBus");
+            valueBus.getItems().addAll(1000, 3000, 5000);
+            javafx.scene.control.TextField tituloHist = (javafx.scene.control.TextField) novaHistoria.lookup("#tituloHist");
+            tituloHist.textProperty().addListener((observable, oldValue, newValue) -> {
+                Object business = valueBus.getSelectionModel().getSelectedItem();
+                Object pts = histPts.getSelectionModel().getSelectedItem();
                 atualizaDadosHistoria(novaHistoria,
                         newValue,
                         business != null ? Integer.valueOf(business.toString()) : null,
                         pts != null ? Integer.valueOf(pts.toString()) : null,
                         null);
             });
-            valueCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                String text = tituloTF.getText();
-                Object pts = pontosCB.getSelectionModel().getSelectedItem();
-                atualizaDadosHistoria(novaHistoria,
-                        text,
-                        newValue != null ? Integer.valueOf(newValue.toString()) : null,
-                        pts != null ? Integer.valueOf(pts.toString()) : null,
-                        null);
+
+            if (teste != null) {
+                idHistoriaTF.setText(String.valueOf(teste.idhistoria.getValue()));
+                tituloHist.setText(teste.nomehist.getValue());
+                histPts.setValue(teste.pontos.getValue());
+                valueBus.setValue(teste.valuebusiness.getValue());
+            }
+
+            javafx.scene.control.Button histBtn = (javafx.scene.control.Button) novaHistoria.lookup("#histBtn");
+            //abrir informaçoes
+            histBtn.setOnAction(actionEvent -> {
+                AnchorPane infoTela = null;
+                try {
+                    infoTela = FXMLLoader.load(getClass().getResource("newhistBacklog.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                javafx.scene.control.TextField valorTit = (javafx.scene.control.TextField) infoTela.lookup("#valorTit");
+                valorTit.setText(tituloHist.getText());
+                //instanciar botoes
+                ComboBox statusCB = (ComboBox) infoTela.lookup("#statusCB");
+                statusCB.getItems().addAll("","Em andamento", "Concluído");
+                ComboBox pontosCB = (ComboBox) infoTela.lookup("#pontosCB");
+                pontosCB.getItems().addAll(1, 2, 3, 5, 8, 13);
+
+                ComboBox valueCB = (ComboBox) infoTela.lookup("#valueCB");
+                valueCB.getItems().addAll(1000, 3000, 5000);
+
+
+
+                if(!histPts.getSelectionModel().isEmpty()){
+                    pontosCB.setValue(histPts.getSelectionModel().getSelectedItem().toString());
+                }
+
+                if(!valueBus.getSelectionModel().isEmpty()) {
+                    valueCB.setValue(valueBus.getSelectionModel().getSelectedItem().toString());
+                }
+
+                javafx.scene.control.TextField idHistoriasTF = (javafx.scene.control.TextField) infoTela.lookup("#idHistoriasTF");
+                idHistoriasTF.setText(idHistoriaTF.getText());
+
+
+                javafx.scene.control.TextArea descrHist = (javafx.scene.control.TextArea) infoTela.lookup("#descrHist");
+                javafx.scene.control.Button infoSalvar = (javafx.scene.control.Button) infoTela.lookup("#infoSalvar");
+                //---------
+
+                mainSprint.setStyle("-fx-background-color: rgba(128, 128, 128, 0.4)");
+                mainSprint.setDisable(false);
+                mainSprint.setVisible(true);
+                mainSprint.getChildren().addAll(infoTela);
+
+                infoSalvar.setOnAction(actionEvent2 -> {
+                    String id = idHistoriasTF.getText();
+                    String titulo = valorTit.getText();
+                    int business = (int) valueCB.getSelectionModel().getSelectedItem();
+                    int pts = (int) pontosCB.getSelectionModel().getSelectedItem();
+                    String status = (String) statusCB.getSelectionModel().getSelectedItem();
+                    String descricao = descrHist.getText();
+                    if (id == null || id.isEmpty()){
+                        historiaDAO.newHistoria(new Conexao(),titulo, business,pts, status, descricao);
+                    }
+
+                    /*atualizaDadosHistoria(novaHistoria,
+                            titulo,
+                            business != null ? Integer.valueOf(business.toString()) : null,
+                            pts != null ? Integer.valueOf(pts.toString()) : null,
+                            descrHist.getText());
+                    mainSprint.getChildren().remove(mainSprint.lookup("#newhistBacklog"));*/
+
+                    System.out.println(historiaDAO.getIdHistoria());
+                    mainSprint.setDisable(true);
+                    mainSprint.setVisible(false);
+                });
+
+
+
+                javafx.scene.control.Button infoCancel = (javafx.scene.control.Button) infoTela.lookup("#infoCancel");
+                infoCancel.setOnAction(actionEvent3 -> {
+                    mainSprint.getChildren().remove(mainSprint.lookup("#newhistBacklog"));
+                    mainSprint.setDisable(true);
+                    mainSprint.setVisible(false);
+                });
             });
-            pontosCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                String text = tituloTF.getText();
-                Object business = valueCB.getSelectionModel().getSelectedItem();
-                atualizaDadosHistoria(novaHistoria,
-                        text,
-                        business != null ? Integer.valueOf(business.toString()) : null,
-                        newValue != null ? Integer.valueOf(newValue.toString()) : null,
-                        null);
-            });
+            //historiaButtonOnAction(novaHistoria, histPts, valueBus, tituloHist, histBtn);
+            //-----------------
 
+            toDo.getChildren().add(novaHistoria);
+            i++;
 
-
-            mainSprint.setStyle("-fx-background-color: rgba(128, 128, 128, 0.4)");
-            mainSprint.setDisable(false);
-            mainSprint.setVisible(true);
-            mainSprint.getChildren().addAll(infoTela);
-
-            javafx.scene.control.TextArea descrHist = (javafx.scene.control.TextArea) infoTela.lookup("#descrHist");
-            javafx.scene.control.Button infoSalvar = (javafx.scene.control.Button) infoTela.lookup("#infoSalvar");
-
-            infoSalvar.setOnAction(actionEvent2 -> {
-                String text = tituloHist.getText();
-                Object business = valueBus.getSelectionModel().getSelectedItem();
-                Object pts = histPts.getSelectionModel().getSelectedItem();
-                atualizaDadosHistoria(novaHistoria,
-                        text,
-                        business != null ? Integer.valueOf(business.toString()) : null,
-                        pts != null ? Integer.valueOf(pts.toString()) : null,
-                        descrHist.getText());
-                mainSprint.getChildren().remove(mainSprint.lookup("#newhistBacklog"));
-                mainSprint.setDisable(true);
-                mainSprint.setVisible(false);
-            });
-
-
-
-            javafx.scene.control.Button infoCancel = (javafx.scene.control.Button) infoTela.lookup("#infoCancel");
-            infoCancel.setOnAction(actionEvent3 -> {
-                mainSprint.getChildren().remove(mainSprint.lookup("#newhistBacklog"));
-                mainSprint.setDisable(true);
-                mainSprint.setVisible(false);
-            });
-        });
-
-        toDo.getChildren().add(novaHistoria);
-        i++;
     }
 
     public void atualizaDadosHistoria(AnchorPane novaHistoria, String text, Integer business, Integer pts, String descr) {
