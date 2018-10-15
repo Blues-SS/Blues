@@ -1,42 +1,56 @@
 package sample;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Historias {
 
-
-    public SimpleIntegerProperty idhistoria = new SimpleIntegerProperty();
-    public SimpleIntegerProperty idsprint = new SimpleIntegerProperty();
+    public SimpleLongProperty idhistoria = new SimpleLongProperty();
+    public SimpleLongProperty idsprint = new SimpleLongProperty();
     public SimpleStringProperty idstatus = new SimpleStringProperty();
     public SimpleStringProperty nomehist = new SimpleStringProperty();
+    public SimpleStringProperty descricao = new SimpleStringProperty();
     public SimpleIntegerProperty valuebusiness = new SimpleIntegerProperty();
+    public SimpleIntegerProperty pontos = new SimpleIntegerProperty();
     public SimpleObjectProperty dtcriacao = new SimpleObjectProperty<>();
     public SimpleObjectProperty dtalteracao = new SimpleObjectProperty<>();
 
 
-    public int getIdhistoria() {
+    public int getPontos() { return pontos.get(); }
+
+    public SimpleIntegerProperty pontosProperty() { return pontos; }
+
+    public void setPontos(int pontos) { this.pontos.set(pontos); }
+
+    public String getDescriscao() { return descricao.get(); }
+
+    public SimpleStringProperty descriscaoProperty() { return descricao; }
+
+    public void setDescricao(String descricao) { this.descricao.set(descricao); }
+
+    public long getIdhistoria() {
         return idhistoria.get();
     }
 
-    public SimpleIntegerProperty idhistoriaProperty() {
+    public SimpleLongProperty idhistoriaProperty() {
         return idhistoria;
     }
 
-    public void setIdhistoria(int idhistoria) {
+    public void setIdhistoria(Long idhistoria) {
         this.idhistoria.set(idhistoria);
     }
 
-    public int getIdsprint() {
+    public long getIdsprint() {
         return idsprint.get();
     }
 
-    public SimpleIntegerProperty idsprintProperty() {
+    public SimpleLongProperty idsprintProperty() {
         return idsprint;
     }
 
-    public void setIdsprint(int idsprint) {
+    public void setIdsprint(Long idsprint) {
         this.idsprint.set(idsprint);
     }
 
