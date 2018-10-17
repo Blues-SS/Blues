@@ -7,33 +7,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="159.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintCrud">
-        <children>
-      <AnchorPane prefHeight="159.0" prefWidth="381.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;">
-         <children>
-             <TextField fx:id="tituloHist" layoutX="21.0" layoutY="32.0" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" promptText="Nova História" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2; -fx-border-radius: 4px;">
-                 <font>
-                     <Font name="Nirmala UI" size="14.0" />
-                 </font>
-             </TextField>
-             <Label layoutX="22.0" layoutY="91.0" text="Value Business">
-                 <font>
-                     <Font name="Nirmala UI" size="14.0" />
-                 </font>
-             </Label>
-             <ComboBox fx:id="valueBus" layoutX="21.0" layoutY="111.0" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2; -fx-border-radius: 4px;" />
-             <Button fx:id="histBtn" layoutX="256.0" layoutY="111.0" maxHeight="35.0" minHeight="35.0" mnemonicParsing="false" prefHeight="35.0" text="Informações">
-                 <font>
-                     <Font name="Nirmala UI" size="14.0" />
-                 </font>
-             </Button>
-             <ComboBox fx:id="histPts" layoutX="263.0" layoutY="32.0" minHeight="35.0" prefHeight="35.0" prefWidth="90.0" promptText="Pontos" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2; -fx-border-radius: 4px;" />
-             <Label layoutX="22.0" layoutY="14.0" text="Nome da História">
-                 <font>
-                     <Font name="Nirmala UI" size="14.0" />
-                 </font>
-             </Label>
-         </children>
-      </AnchorPane>
-        </children>
-    </AnchorPane>
+<AnchorPane prefHeight="159.0" prefWidth="381.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SprintCrud">
+ <children>
+     <TextField fx:id="tituloHist" layoutX="21.0" layoutY="32.0" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" promptText="Nova História" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2; -fx-border-radius: 4px;">
+         <font>
+             <Font name="Nirmala UI" size="14.0" />
+         </font>
+     </TextField>
+     <Label layoutX="22.0" layoutY="91.0" text="Value Business">
+         <font>
+             <Font name="Nirmala UI" size="14.0" />
+         </font>
+     </Label>
+     <ComboBox fx:id="valueBus" layoutX="21.0" layoutY="111.0" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" style="-fx-border-color: #ff9100; -fx-background-color: #fffcf7; -fx-border-width: 2; -fx-border-radius: 4px;" />
+     <Button fx:id="histBtn" layoutX="256.0" layoutY="111.0" maxHeight="35.0" minHeight="35.0" mnemonicParsing="false" prefHeight="35.0" stylesheets="@Styles.css" text="Informações">
+         <font>
+             <Font name="Nirmala UI" size="14.0" />
+         </font>
+     </Button>
+     <ComboBox fx:id="histPts" layoutX="263.0" layoutY="32.0" minHeight="35.0" prefHeight="35.0" prefWidth="90.0" promptText="Pontos" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2; -fx-border-radius: 4px;" />
+     <Label layoutX="22.0" layoutY="14.0" text="Nome da História">
+         <font>
+             <Font name="Nirmala UI" size="14.0" />
+         </font>
+     </Label>
+ </children>
+</AnchorPane>

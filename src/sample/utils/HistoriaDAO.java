@@ -266,7 +266,7 @@ public class HistoriaDAO {
             conexao.Conectar();
 
             String sql = "INSERT INTO HISTORIA (ID_SPRINT, STATUS, NOME, PONTOS, VALUE_BUSINESS, DT_CRIACAO, DT_ALTERACAO, DESCRICAO) VALUES ("
-                    + 6 + ","
+                    + 1 + ","
                     + "'" + status + "'" + ","
                     + "'" +titulo + "',"
                     + pts + ","
@@ -275,7 +275,7 @@ public class HistoriaDAO {
                     + "current_timestamp,"
                     + "'" + descricao + "')";
 
-            ResultSet rs = conexao.getStmt().executeQuery(sql);
+            conexao.getStmt().executeQuery(sql);
 
         } catch (SQLException e) {
             e.printStackTrace();

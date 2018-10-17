@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,11 +19,8 @@ import sample.utils.Conexao;
 import sample.utils.HistoriaDAO;
 import sample.utils.SprintDAO;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -32,9 +30,9 @@ public class BacklogController {
     @FXML
     private Button cancelarBT;
     @FXML
-    private AnchorPane mainSprint;
+    private AnchorPane mainBacklog;
     @FXML
-    private AnchorPane main;
+    private FlowPane mainFlowBacklog;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -79,15 +77,15 @@ public class BacklogController {
     }
 
 
-    public void handleNovaHistoria(MouseEvent event) throws IOException {
+    public void handleNovaHistoria(MouseEvent event) throws Exception {
         newHistoria(null);
     }
 
 
-    public void newHistoria(Historias teste) throws IOException {
+    public void newHistoria(Historias teste) throws Exception {
 
             AnchorPane novaHistoria = FXMLLoader.load(getClass().getResource("historiaBacklog.fxml"));
-            novaHistoria.setId("Hist" + i);
+            novaHistoria.setId("Hist" + i); // tem que verificar esse ID que vai ficar igual com algumas histórias criadas na Nova Sprint, porque o i reseta o valor
 
             //-----------------------
             this.sprintDAO = new SprintDAO();
@@ -123,83 +121,80 @@ public class BacklogController {
             javafx.scene.control.Button histBtn = (javafx.scene.control.Button) novaHistoria.lookup("#histBtn");
             //abrir informaçoes
             histBtn.setOnAction(actionEvent -> {
-                AnchorPane infoTela = null;
                 try {
-                    infoTela = FXMLLoader.load(getClass().getResource("newhistBacklog.fxml"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    AnchorPane infoTela = FXMLLoader.load(getClass().getResource("newhistBacklog.fxml"));
 
-                javafx.scene.control.TextField valorTit = (javafx.scene.control.TextField) infoTela.lookup("#valorTit");
-                valorTit.setText(tituloHist.getText());
-                //instanciar botoes
-                ComboBox statusCB = (ComboBox) infoTela.lookup("#statusCB");
-                statusCB.getItems().addAll("","Em andamento", "Concluído");
-                ComboBox pontosCB = (ComboBox) infoTela.lookup("#pontosCB");
-                pontosCB.getItems().addAll(1, 2, 3, 5, 8, 13);
+                    javafx.scene.control.TextField valorTit = (javafx.scene.control.TextField) infoTela.lookup("#valorTit");
+                    valorTit.setText(tituloHist.getText());
+                    //instanciar botoes
+                    ComboBox statusCB = (ComboBox) infoTela.lookup("#statusCB");
+                    statusCB.getItems().addAll("", "Em andamento", "Concluído");
+                    ComboBox pontosCB = (ComboBox) infoTela.lookup("#pontosCB");
+                    pontosCB.getItems().addAll(1, 2, 3, 5, 8, 13);
 
-                ComboBox valueCB = (ComboBox) infoTela.lookup("#valueCB");
-                valueCB.getItems().addAll(1000, 3000, 5000);
+                    ComboBox valueCB = (ComboBox) infoTela.lookup("#valueCB");
+                    valueCB.getItems().addAll(1000, 3000, 5000);
 
 
-
-                if(!histPts.getSelectionModel().isEmpty()){
-                    pontosCB.setValue(histPts.getSelectionModel().getSelectedItem().toString());
-                }
-
-                if(!valueBus.getSelectionModel().isEmpty()) {
-                    valueCB.setValue(valueBus.getSelectionModel().getSelectedItem().toString());
-                }
-
-                javafx.scene.control.TextField idHistoriasTF = (javafx.scene.control.TextField) infoTela.lookup("#idHistoriasTF");
-                idHistoriasTF.setText(idHistoriaTF.getText());
-
-
-                javafx.scene.control.TextArea descrHist = (javafx.scene.control.TextArea) infoTela.lookup("#descrHist");
-                javafx.scene.control.Button infoSalvar = (javafx.scene.control.Button) infoTela.lookup("#infoSalvar");
-                //---------
-
-                mainSprint.setStyle("-fx-background-color: rgba(128, 128, 128, 0.4)");
-                mainSprint.setDisable(false);
-                mainSprint.setVisible(true);
-                mainSprint.getChildren().addAll(infoTela);
-
-                infoSalvar.setOnAction(actionEvent2 -> {
-                    String id = idHistoriasTF.getText();
-                    String titulo = valorTit.getText();
-                    int business = (int) valueCB.getSelectionModel().getSelectedItem();
-                    int pts = (int) pontosCB.getSelectionModel().getSelectedItem();
-                    String status = (String) statusCB.getSelectionModel().getSelectedItem();
-                    String descricao = descrHist.getText();
-                    if (id == null || id.isEmpty()){
-                        historiaDAO.newHistoria(new Conexao(),titulo, business,pts, status, descricao);
+                    if (!histPts.getSelectionModel().isEmpty()) {
+                        pontosCB.setValue(histPts.getSelectionModel().getSelectedItem().toString());
                     }
+
+                    if (!valueBus.getSelectionModel().isEmpty()) {
+                        valueCB.setValue(valueBus.getSelectionModel().getSelectedItem().toString());
+                    }
+
+                    javafx.scene.control.TextField idHistoriasTF = (javafx.scene.control.TextField) infoTela.lookup("#idHistoriasTF");
+                    idHistoriasTF.setText(idHistoriaTF.getText());
+
+
+                    javafx.scene.control.TextArea descrHist = (javafx.scene.control.TextArea) infoTela.lookup("#descrHist");
+                    javafx.scene.control.Button infoSalvar = (javafx.scene.control.Button) infoTela.lookup("#infoSalvar");
+                    //---------
+
+                    mainBacklog.setStyle("-fx-background-color: rgba(128, 128, 128, 0.4)");
+                    mainBacklog.setDisable(false);
+                    mainBacklog.setVisible(true);
+                    mainBacklog.getChildren().addAll(infoTela);
+
+                    infoSalvar.setOnAction(actionEvent2 -> {
+                        String id = idHistoriasTF.getText();
+                        String titulo = valorTit.getText();
+                        int business = (int) valueCB.getSelectionModel().getSelectedItem();
+                        int pts = (int) pontosCB.getSelectionModel().getSelectedItem();
+                        String status = (String) statusCB.getSelectionModel().getSelectedItem();
+                        String descricao = descrHist.getText();
+                        if (id == null || id.isEmpty()) {
+                            historiaDAO.newHistoria(new Conexao(), titulo, business, pts, status, descricao);
+                        }
 
                     /*atualizaDadosHistoria(novaHistoria,
                             titulo,
                             business != null ? Integer.valueOf(business.toString()) : null,
                             pts != null ? Integer.valueOf(pts.toString()) : null,
-                            descrHist.getText());
-                    mainSprint.getChildren().remove(mainSprint.lookup("#newhistBacklog"));*/
+                            descrHist.getText());*/
+                        mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
 
-                    System.out.println(historiaDAO.getIdHistoria());
-                    mainSprint.setDisable(true);
-                    mainSprint.setVisible(false);
-                });
+                        System.out.println(historiaDAO.getIdHistoria());
+                        mainBacklog.setDisable(true);
+                        mainBacklog.setVisible(false);
+                    });
 
 
-
-                javafx.scene.control.Button infoCancel = (javafx.scene.control.Button) infoTela.lookup("#infoCancel");
-                infoCancel.setOnAction(actionEvent3 -> {
-                    mainSprint.getChildren().remove(mainSprint.lookup("#newhistBacklog"));
-                    mainSprint.setDisable(true);
-                    mainSprint.setVisible(false);
-                });
+                    Button infoCancel = (Button) infoTela.lookup("#infoCancel");
+                    infoCancel.setOnAction(actionEvent3 -> {
+                        mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
+                        mainBacklog.setDisable(true);
+                        mainBacklog.setVisible(false);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             //historiaButtonOnAction(novaHistoria, histPts, valueBus, tituloHist, histBtn);
             //-----------------
 
-            toDo.getChildren().add(novaHistoria);
+            mainFlowBacklog.getChildren().add(novaHistoria);
             i++;
 
     }

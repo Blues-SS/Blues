@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="newhists" maxHeight="768.0" maxWidth="1280.0" minHeight="400.0" minWidth="750.0" prefHeight="472.0" prefWidth="750.0" style="-fx-background-color: #fffcf7;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
+<AnchorPane fx:id="newhists" layoutX="300.0" layoutY="150.0" maxHeight="768.0" maxWidth="1280.0" minHeight="400.0" minWidth="750.0" prefHeight="472.0" prefWidth="750.0" style="-fx-background-color: #fffcf7;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
    <children>
       <TextArea fx:id="descrHist" layoutX="31.0" layoutY="146.0" prefHeight="234.0" prefWidth="688.0" />
       <Button fx:id="infoSalvar" layoutX="589.0" layoutY="402.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#salvarHist" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Salvar">
