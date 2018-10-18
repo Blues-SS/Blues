@@ -204,6 +204,7 @@ public class SprintDAO {
         try {
 
             conexao.Conectar();
+            System.out.println(sprintDAO.getDtInicio());
 
             if (sprintDAO.getDtInicio() == null || sprintDAO.getDtFim() == null) {
                 JOptionPane.showMessageDialog(null, "Data não selecionada!");

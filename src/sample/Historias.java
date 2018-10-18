@@ -16,6 +16,7 @@ public class Historias {
     public SimpleIntegerProperty pontos = new SimpleIntegerProperty();
     public SimpleObjectProperty dtcriacao = new SimpleObjectProperty<>();
     public SimpleObjectProperty dtalteracao = new SimpleObjectProperty<>();
+    public SimpleStringProperty tipo = new SimpleStringProperty();
 
 
     public int getPontos() { return pontos.get(); }
@@ -29,6 +30,12 @@ public class Historias {
     public SimpleStringProperty descriscaoProperty() { return descricao; }
 
     public void setDescricao(String descricao) { this.descricao.set(descricao); }
+
+    public String getTipo() { return tipo.get(); }
+
+    public SimpleStringProperty tipoProperty() { return tipo; }
+
+    public void setTipo(String tipo) { this.tipo.set(tipo); }
 
     public long getIdhistoria() {
         return idhistoria.get();
