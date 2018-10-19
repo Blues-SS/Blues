@@ -31,6 +31,6 @@
                 <Font name="Nirmala UI" size="14.0" />
             </font>
         </Label>
-    <TextField fx:id="idHistoriaTF" layoutX="308.0" layoutY="79.0" prefHeight="25.0" prefWidth="43.0" visible="true" />
+    <TextField fx:id="idHistoriaTF" layoutX="305.0" layoutY="79.0" prefHeight="25.0" prefWidth="43.0" visible="true" />
     </children>
 </AnchorPane>
