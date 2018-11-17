@@ -2,7 +2,6 @@ package sample.utils;
 
 import sample.Historias;
 
-import javax.swing.*;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -139,6 +138,15 @@ public class HistoriaDAO {
         }
     }
 
+    public HistoriaDAO histBacklog(Conexao conexao, HistoriaDAO historiaDAO) {
+
+        if (historiaDAO.getIdHistoria() != null) {
+            return update(conexao, historiaDAO);
+        } else {
+            return create(conexao, historiaDAO);
+        }
+    }
+
     private HistoriaDAO create(Conexao conexao, HistoriaDAO historiaDAO) {
         try {
             conexao.Conectar();
@@ -149,8 +157,8 @@ public class HistoriaDAO {
                     + "'" + historiaDAO.getNome() + "',"
                     + historiaDAO.getPontos() + ","
                     + historiaDAO.getValueBusiness() + ","
-                    + "current_timestamp,"
-                    + "current_timestamp,"
+                    + "CURRENT_DATE,"
+                    + "CURRENT_DATE,"
                     + "'" + historiaDAO.getDescricao() + "') RETURNING *, id_historia";
 
             ResultSet rs = conexao.getStmt().executeQuery(sql);
@@ -178,10 +186,7 @@ public class HistoriaDAO {
                     + historiaDAO.getPontos() + ","
                     + "value_business = " +
                     + historiaDAO.getValueBusiness() + ","
-                    + "dt_criacao = "
-                    + "'" + historiaDAO.getDtCriacao() + "',"
-                    + "dt_alteracao = "
-                    + "'" + historiaDAO.getDtAlteracao() + "',"
+                    + "dt_alteracao = CURRENT_DATE " + ","
                     + "descricao = "
                     + "'" + historiaDAO.getDescricao() + "'"
                     + " WHERE ID_HISTORIA = " + historiaDAO.getIdHistoria()
@@ -196,6 +201,72 @@ public class HistoriaDAO {
             e.printStackTrace();
         }
         return historiaDAO;
+    }
+
+
+
+    public List<String> getnameSprints(Conexao conexao) throws SQLException {
+        List<String> list = new ArrayList();
+
+        conexao.Conectar();
+
+        String sql = "select DISTINCT s.nome from sprint s join historia h on s.id_sprint = h.id_sprint";
+
+        ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+        while (rs.next()) {
+
+
+            list.add(rs.getString("nome"));
+        }
+        conexao.Desconectar();
+
+        return list;
+    }
+
+    //nao estou usando ainda
+    //pegar o nome da sprint atual(estava com problema em usar a função a cima)
+    public String getsprintAtual(Conexao conexao, String ID) throws SQLException {
+
+        String sprint = null;
+
+        conexao.Conectar();
+
+        String sql = "select DISTINCT s.nome from sprint s join historia h on s.id_sprint = h.id_sprint where h.id_historia = "+ID;
+
+        ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+        while (rs.next()) {
+            sprint = (rs.getString("nome"));
+        }
+        conexao.Desconectar();
+
+        return sprint;
+    }
+
+    public int atualizasprint(Conexao conexao, String sprint, String ID) throws SQLException {
+
+        int idnovasprint = 0;
+
+        conexao.Conectar();
+
+        //pegar id da sprint que "sprint" que sera feito o update
+        String sql = "select id_sprint from sprint where nome = "+"'"+sprint+"'";
+        ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+        while (rs.next()) {
+            idnovasprint = (rs.getInt("id_sprint"));
+        }
+
+
+
+        //pegar id da sprint que "sprint" que sera feito o update
+        //String sql2 = "update historia set id_sprint = "+idnovasprint+" where id_historia = "+ID  + " RETURNING *";;
+        //conexao.getStmt().executeQuery(sql2);
+
+        conexao.Desconectar();
+
+        return idnovasprint;
     }
 
     private HistoriaDAO mapper(ResultSet rs) throws SQLException {
@@ -289,27 +360,6 @@ public class HistoriaDAO {
         historia.setDtalteracao(historiaDAO.getDtAlteracao());
 
         return historia;
-    }
-
-    public void newHistoria(Conexao conexao, String titulo, int business, int pts, String status, String descricao) {
-        try {
-            conexao.Conectar();
-
-            String sql = "INSERT INTO HISTORIA (ID_SPRINT, STATUS, NOME, PONTOS, VALUE_BUSINESS, DT_CRIACAO, DT_ALTERACAO, DESCRICAO) VALUES ("
-                    + 1 + ","
-                    + "'" + status + "'" + ","
-                    + "'" +titulo + "',"
-                    + pts + ","
-                    + business + ","
-                    + "current_timestamp,"
-                    + "current_timestamp,"
-                    + "'" + descricao + "')";
-
-            conexao.getStmt().executeQuery(sql);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 }
