@@ -45,7 +45,7 @@ public class BacklogController {
     private static SprintDAO sprintDAO;
     private static Conexao conexao = new Conexao();
     long IDHistoriaGravar;
-    int IDsprintBacklog = 6;
+    int IDsprintBacklog = 1;
 
     private HistoriaDAO historiaDAO = new HistoriaDAO();
     ObservableList<Historias> historia;
@@ -114,7 +114,6 @@ public class BacklogController {
         this.sprintDAO = new SprintDAO();
         HistoriaDAO historiaDAO = new HistoriaDAO();
         historiaDAO.setIdHistoria((long) i);
-        //historiaDAO.setStatus("TODO");
         this.sprintDAO.getHistorias().add(historiaDAO);
 
 
@@ -154,6 +153,7 @@ public class BacklogController {
                 TextField idHistoriasTF = (TextField) infoTela.lookup("#idHistoriasTF");
                 idHistoriasTF.setText(idHistoriaTF.getText());//REMOVER
                 TextField valorTit = (TextField) infoTela.lookup("#valorTit");
+
                 valorTit.setText(tituloHist.getText());
 
                 //pegar o id da historia e apos o nome da sprint que esta alocado
@@ -162,15 +162,13 @@ public class BacklogController {
                 //String sprint;
                 //sprint = historiaDAO.getsprintAtual(new Conexao(), ID);
 
-                //instanciar botoes
-                ComboBox statusCB = (ComboBox) infoTela.lookup("#statusCB");
-                statusCB.getItems().addAll("", "Em andamento", "Concluído");
-
                 ComboBox pontosCB = (ComboBox) infoTela.lookup("#pontosCB");
                 pontosCB.getItems().addAll(1, 2, 3, 5, 8, 13);
+                pontosCB.setValue(histPts.getValue());
 
                 ComboBox valueCB = (ComboBox) infoTela.lookup("#valueCB");
                 valueCB.getItems().addAll(1000, 3000, 5000);
+                valueCB.setValue(valueBus.getValue());
 
 
                 ComboBox sprintCB = (ComboBox) infoTela.lookup("#sprintCB");
@@ -178,6 +176,8 @@ public class BacklogController {
                 //pegar todas Sprints criadas e adicionar no comboBox
                 List<String> list = new ArrayList();
                 int i, qtd;
+
+
                 list = historiaDAO.getnameSprints(new Conexao());
                 qtd = (list.size());
 
@@ -193,7 +193,6 @@ public class BacklogController {
                         pontosCB.setValue(historia.getPontos());
                         valueCB.setValue(historia.getValuebusiness());
                         idHistoriasTF.setText(historia.getDescriscao());
-                        statusCB.setValue(historia.getIdstatus());
                         descrHist.setText(historia.getDescriscao());
 
                         String nomeSpint;
@@ -214,7 +213,6 @@ public class BacklogController {
 
                 infoSalvar.setOnAction(actionEvent2 -> {
                     String titulo = valorTit.getText();
-                    Object status = statusCB.getValue();
                     Object business = valueCB.getValue();
                     int pts = (int) pontosCB.getValue();
                     String descricao = descrHist.getText();
@@ -240,13 +238,44 @@ public class BacklogController {
                         historiaDAO.setIdHistoria(null);
                     }
                     historiaDAO.setNome(titulo);
-                    historiaDAO.setStatus((String) status);
+                    historiaDAO.setStatus("TODO");
                     historiaDAO.setValueBusiness((Integer) business);
                     historiaDAO.setPontos(pts);
                     historiaDAO.setDescricao((String) descricao);
 
 
-                    historiaDAO.save(new Conexao(), historiaDAO);
+                    boolean tituloDuplicado = false;
+                        try {
+                            tituloDuplicado = historiaDAO.historiaJaCadastrado(new Conexao(), titulo, ID);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (tituloDuplicado == true){
+                            JOptionPane.showMessageDialog(null, "Tituli ja cadastrado informe outro");
+                        }else {
+
+                        historiaDAO.save(new Conexao(), historiaDAO);
+
+                        removerTodasTarefas();
+
+                        //regaregar as historia (esta dando erro no historia.addall(list));
+
+                        try {
+                            this.carregarHistorias();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                        mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
+                        mainBacklog.setDisable(true);
+                        mainBacklog.setVisible(false);
+                    }
+                });
+
+
+
+                infoCancel.setOnAction(actionEvent3 -> {
 
                     removerTodasTarefas();
 
@@ -263,20 +292,33 @@ public class BacklogController {
                     mainBacklog.setVisible(false);
                 });
 
-
-
-                infoCancel.setOnAction(actionEvent3 -> {
-                    mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
-                    mainBacklog.setDisable(true);
-                    mainBacklog.setVisible(false);
-                });
-
                 infodeletar.setOnAction(actionEvent3 -> {
+
 
 
                     JOptionPane.showMessageDialog(null, "Deseja realmente deletar esta historia ?");
 
+                    if (!(ID.isEmpty())) {//se tiver tiver id senao ira ser null e não entra aqui
+                        String meuid = ID;
+                        Long meuidnumber = Long.parseLong(meuid);
+                        try {
+                            historiaDAO.deleteHistoria(new Conexao(), meuidnumber);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+
+
+                    removerTodasTarefas();
+
+                    //regaregar as historia (esta dando erro no historia.addall(list));
+
+                    try {
+                        this.carregarHistorias();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
 
                     mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
                     mainBacklog.setDisable(true);
@@ -305,10 +347,10 @@ public class BacklogController {
         AtomicReference<Integer> index = new AtomicReference<>();
         String id = novaHistoria.getId();
         Long idLong = Long.valueOf(id.replaceAll("\\D", ""));
+
         sprintDAO.getHistorias().forEach(historia -> {
             if (historia.getIdHistoria() == idLong) {
                 historiaDAO.setIdHistoria(historia.getIdHistoria());
-                historiaDAO.setStatus(historia.getStatus());
                 historia.setDescricao(historia.getDescricao());
                 index.set(sprintDAO.getHistorias().indexOf(historia));
             }

@@ -99,7 +99,7 @@ public class SprintDAO {
 
         conexao.Conectar();
 
-        String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint";
+        String sql = "select id_sprint, nome, status, dt_inicio, dt_fim, dt_criacao, dt_alteracao from sprint where id_sprint > 1";
 
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 

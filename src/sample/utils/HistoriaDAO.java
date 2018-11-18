@@ -210,7 +210,7 @@ public class HistoriaDAO {
 
         conexao.Conectar();
 
-        String sql = "select DISTINCT s.nome from sprint s join historia h on s.id_sprint = h.id_sprint";
+        String sql = "select nome from sprint";
 
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 
@@ -315,6 +315,82 @@ public class HistoriaDAO {
         return list;
     }
 
+    //arquivar historia pelo id
+    public void deleteHistoria(Conexao conexao, long ID) throws SQLException {
+
+        List<Historias> list = new ArrayList();
+
+        conexao.Conectar();
+
+        String sql = "update historia set ativo = 'F' where id_historia = "+ID;
+        ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+        conexao.Desconectar();
+    }
+
+    //verifica se o nome que esta pra ser gravado ja não exite
+    public boolean historiaJaCadastrado(Conexao conexao, String nome, String ID) throws SQLException {
+        long i = 0; //variavel auxiliar
+        List<Historias> list = new ArrayList();
+        conexao.Conectar();
+
+
+        String sql = "select * from historia where nome = "+"'"+nome+"'"+ " and ativo = 'T'";
+
+        ResultSet rs = conexao.getStmt().executeQuery(sql);
+
+        conexao.Desconectar();
+
+        while (rs.next()) {
+            HistoriaDAO historia = new HistoriaDAO();
+
+            historia.setIdHistoria(rs.getLong("id_historia"));
+            historia.setIdSprint(rs.getLong("id_sprint"));
+            historia.setStatus(rs.getString("status"));
+            historia.setNome(rs.getString("nome"));
+            historia.setDescricao(rs.getString("descricao"));
+            historia.setValueBusiness(rs.getInt("value_business"));
+            historia.setPontos(rs.getInt("pontos"));
+            historia.setDtCriacao(rs.getDate("dt_criacao"));
+            historia.setDtAlteracao(rs.getDate("dt_alteracao"));
+
+            list.add(toInterface(historia));
+        }
+
+        i = list.size();
+
+
+        //nova historia e primeira historia
+        //alterar historia
+        //adicionra nova com mesmo nome
+        //alterar uma ja criada pra uma ja com mesmo nome
+
+
+        //nova historia logo se i = 1 e duplicado
+        if (ID == null || ID.isEmpty()){
+            if (i == 1){
+                return true;
+            }
+        }else{
+            if (i > 1){
+                return true;
+            }
+
+            if (i == 1){  //no caso de alterar uma ja criada para um nome duplicado
+                long meuid = list.get(0).getIdhistoria();
+
+                //converter
+                Long ID2 = Long.parseLong(ID);
+                //-------------------------------------
+                if (!(meuid == ID2)){
+                  return true;
+                }
+
+            }
+        }
+
+        return false;
+    }
 
     //pegar todas historia do banco
     public List<Historias> getHistoriaBacklog(Conexao conexao) throws SQLException {
@@ -322,7 +398,7 @@ public class HistoriaDAO {
 
         conexao.Conectar();
 
-        String sql = "select * from historia where id_sprint = 6";
+        String sql = "select * from historia where id_sprint = 1 and ativo = 'T'";
 
         ResultSet rs = conexao.getStmt().executeQuery(sql);
 

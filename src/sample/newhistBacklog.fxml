@@ -10,24 +10,18 @@
 
 <!--layoutX="300.0" layoutY="150.0"-->
 
-<AnchorPane fx:id="newhists" maxHeight="768.0" maxWidth="1280.0" minHeight="400.0" minWidth="750.0" prefHeight="472.0" prefWidth="750.0" style="-fx-background-color: #fffcf7;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
+<AnchorPane fx:id="newhists" maxHeight="768.0" layoutX="300.0" layoutY="150.0" maxWidth="1280.0" minHeight="400.0" minWidth="750.0" prefHeight="472.0" prefWidth="750.0" style="-fx-background-color: #fffcf7;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
    <children>
       <Button fx:id="infoSalvar" layoutX="589.0" layoutY="402.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#salvarHist" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Salvar">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="infoCancel" layoutX="31.0" layoutY="402.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#cancelar" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Cancelar">
+      <Button fx:id="infoCancel" layoutX="452.0" layoutY="402.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#cancelar" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Cancelar">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Button>
-
-      <Label fx:id="StatusLB" layoutX="418.0" layoutY="30.0" text="Status">
-         <font>
-            <Font name="System Bold Italic" size="22.0" />
-         </font>
-      </Label>
       <Label fx:id="TitulosLB" layoutX="34.0" layoutY="32.0" text="Titulo">
          <font>
             <Font name="System Bold Italic" size="22.0" />
@@ -40,24 +34,23 @@
          </font>
       </Label>
       <TextField layoutX="120.0" layoutY="29.0" prefHeight="32.0" prefWidth="255.0" />
-      <Label fx:id="PontosLB" layoutX="415.0" layoutY="88.0" text="Pontos">
+      <Label fx:id="PontosLB" layoutX="416.0" layoutY="29.0" text="Pontos">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
       <TextField fx:id="valorTit" layoutX="120.0" layoutY="29.0" prefHeight="32.0" prefWidth="264.0" />
       <ComboBox fx:id="valueCB" layoutX="198.0" layoutY="88.0" prefHeight="32.0" prefWidth="186.0" />
-      <ComboBox fx:id="pontosCB" layoutX="502.0" layoutY="88.0" prefHeight="32.0" prefWidth="217.0" />
-       <ComboBox fx:id="statusCB" layoutX="502.0" layoutY="28.0" prefHeight="36.0" prefWidth="217.0" />
-      <TextField fx:id="idHistoriasTF" layoutX="12.0" layoutY="7.0" prefHeight="25.0" prefWidth="44.0" visible="true" />
-      <TextArea fx:id="descrHist" layoutX="31.0" layoutY="182.0" prefHeight="198.0" prefWidth="688.0" />
-      <Label fx:id="Sprint" layoutX="410.0" layoutY="128.0" prefHeight="40.0" prefWidth="82.0" text="Sprint">
+      <ComboBox fx:id="pontosCB" layoutX="502.0" layoutY="29.0" prefHeight="32.0" prefWidth="217.0" />
+      <TextField fx:id="idHistoriasTF" layoutX="12.0" layoutY="7.0" prefHeight="25.0" prefWidth="44.0" visible="false" />
+      <TextArea fx:id="descrHist" layoutX="31.0" layoutY="144.0" prefHeight="236.0" prefWidth="688.0" />
+      <Label fx:id="Sprint" layoutX="411.0" layoutY="88.0" prefHeight="40.0" prefWidth="82.0" text="Sprint">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <ComboBox fx:id="sprintCB" layoutX="502.0" layoutY="132.0" prefHeight="32.0" prefWidth="217.0" />
-      <Button fx:id="deletarBT" layoutX="183.0" layoutY="402.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#cancelar" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Deletar">
+      <ComboBox fx:id="sprintCB" layoutX="502.0" layoutY="92.0" prefHeight="32.0" prefWidth="217.0" />
+      <Button fx:id="deletarBT" layoutX="30.0" layoutY="402.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#cancelar" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Arquivar">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>
