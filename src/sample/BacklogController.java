@@ -16,6 +16,9 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.utils.Conexao;
 import sample.utils.HistoriaDAO;
@@ -109,12 +112,13 @@ public class BacklogController {
 
         AnchorPane novaHistoria = FXMLLoader.load(getClass().getResource("historiaBacklog.fxml"));
         novaHistoria.setId("Hist" + i); // tem que verificar esse ID que vai ficar igual com algumas histórias criadas na Nova Sprint, porque o i reseta o valor
-
+        Rectangle rectTipo2 = (Rectangle) novaHistoria.lookup("#rectTipo");  //2 pois usa outro embaixo da outra tela e temque ter nome diferente
         //-----------------------
         this.sprintDAO = new SprintDAO();
         HistoriaDAO historiaDAO = new HistoriaDAO();
         historiaDAO.setIdHistoria((long) i);
         this.sprintDAO.getHistorias().add(historiaDAO);
+        historiaDAO.setTipo("Historia");
 
 
         TextField idHistoriaTF = (TextField) novaHistoria.lookup("#idHistoriaTF");
@@ -122,6 +126,11 @@ public class BacklogController {
         histPts.getItems().addAll(1, 2, 3, 5, 8, 13);
         ComboBox valueBus = (ComboBox) novaHistoria.lookup("#valueBus");
         valueBus.getItems().addAll(1000, 3000, 5000);
+
+        Text tipo = (Text) novaHistoria.lookup("#tipo");
+
+
+
         TextField tituloHist = (TextField) novaHistoria.lookup("#tituloHist");
         tituloHist.textProperty().addListener((observable, oldValue, newValue) -> {
             Object business = valueBus.getSelectionModel().getSelectedItem();
@@ -138,6 +147,13 @@ public class BacklogController {
             tituloHist.setText(teste.nomehist.getValue());
             histPts.setValue(teste.pontos.getValue());
             valueBus.setValue(teste.valuebusiness.getValue());
+            tipo.setText(teste.getTipo());
+            if(tipo.getText().equals("Historia"))
+                rectTipo2.setFill(Color.web("#1e90ff"));
+            else if(tipo.getText().equals("Bug"))
+                rectTipo2.setFill(Color.web("#ce271e"));
+            else if(tipo.getText().equals("Defeito"))
+                rectTipo2.setFill(Color.web("#e0b91f"));
         }
 
         Button histBtn = (Button) novaHistoria.lookup("#histBtn");
@@ -171,6 +187,25 @@ public class BacklogController {
                 valueCB.setValue(valueBus.getValue());
 
 
+                Rectangle rectTipo = (Rectangle) novaHistoria.lookup("#rectTipo");
+                ComboBox tipoTarefa = (ComboBox) infoTela.lookup("#tipoTarefa");
+                tipoTarefa.getItems().addAll("Historia","Bug", "Defeito");
+                String tipodaatividade = tipo.getText();
+
+
+                if(tipodaatividade.equals("Historia")) {
+                    rectTipo.setFill(Color.web("#1e90ff")); //azul
+                    tipo.setText("Historia");
+                }
+                else if(tipodaatividade.equals("Bug")){
+                    rectTipo.setFill(Color.web("#ce271e"));  //vermelho
+                    tipo.setText("Bug");
+                }
+                else{
+                    rectTipo.setFill(Color.web("#e0b91f"));
+                    tipo.setText("Defeito");
+                }
+
                 ComboBox sprintCB = (ComboBox) infoTela.lookup("#sprintCB");
 
                 //pegar todas Sprints criadas e adicionar no comboBox
@@ -200,6 +235,21 @@ public class BacklogController {
                         //sprintCB.setText(nomeSprint);
                     });
                 }
+
+                tipoTarefa.setOnAction(actionEvent4 -> {
+                    if(tipoTarefa.getSelectionModel().getSelectedItem() == "Historia") {
+                        rectTipo.setFill(Color.web("#1e90ff"));
+                        tipo.setText("Historia");
+                    }
+                    else if(tipoTarefa.getSelectionModel().getSelectedItem() == "Bug"){
+                        rectTipo.setFill(Color.web("#ce271e"));
+                        tipo.setText("Bug");
+                    }
+                    else{
+                        rectTipo.setFill(Color.web("#e0b91f"));
+                        tipo.setText("Defeito");
+                    }
+                });
 
                 Button infoSalvar = (Button) infoTela.lookup("#infoSalvar");
                 Button infoCancel = (Button) infoTela.lookup("#infoCancel");
@@ -239,6 +289,7 @@ public class BacklogController {
                     }
                     historiaDAO.setNome(titulo);
                     historiaDAO.setStatus("TODO");
+                    historiaDAO.setTipo(tipo.getText());
                     historiaDAO.setValueBusiness((Integer) business);
                     historiaDAO.setPontos(pts);
                     historiaDAO.setDescricao((String) descricao);

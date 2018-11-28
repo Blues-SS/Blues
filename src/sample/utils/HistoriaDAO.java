@@ -323,6 +323,7 @@ public class HistoriaDAO {
             historia.setPontos(rs.getInt("pontos"));
             historia.setDtCriacao(rs.getDate("dt_criacao"));
             historia.setDtAlteracao(rs.getDate("dt_alteracao"));
+            historia.setTipo(rs.getString("tipo"));
 
             list.add(toInterface(historia));
         }
@@ -369,6 +370,7 @@ public class HistoriaDAO {
             historia.setPontos(rs.getInt("pontos"));
             historia.setDtCriacao(rs.getDate("dt_criacao"));
             historia.setDtAlteracao(rs.getDate("dt_alteracao"));
+            historia.setTipo(rs.getString("tipo"));
 
             list.add(toInterface(historia));
         }
@@ -430,6 +432,7 @@ public class HistoriaDAO {
             historia.setPontos(rs.getInt("pontos"));
             historia.setDtCriacao(rs.getDate("dt_criacao"));
             historia.setDtAlteracao(rs.getDate("dt_alteracao"));
+            historia.setTipo(rs.getString("tipo"));
 
             int valornegocio = (historia.getValueBusiness()) / (historia.getPontos());
             historia.setvalordenegocio(valornegocio);
@@ -462,7 +465,7 @@ public class HistoriaDAO {
         return historia;
     }
 
-    private Historias toInterface2(HistoriaDAO historiaDAO) {
+    private Historias toInterface2(HistoriaDAO historiaDAO) {  //usado por conta de um bug quando no valordenegocio
         Historias historia = new Historias();
 
         historia.setIdsprint(historiaDAO.getIdSprint());
@@ -475,6 +478,7 @@ public class HistoriaDAO {
         historia.setDtcriacao(historiaDAO.getDtCriacao());
         historia.setDtalteracao(historiaDAO.getDtAlteracao());
         historia.setvalordenegocio(historiaDAO.getvalordenegocio());
+        historia.setTipo(historiaDAO.getTipo());
 
         return historia;
     }
