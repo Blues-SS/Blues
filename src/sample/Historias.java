@@ -17,6 +17,7 @@ public class Historias  implements Comparable<Historias>{
     public SimpleObjectProperty dtcriacao = new SimpleObjectProperty<>();
     public SimpleObjectProperty dtalteracao = new SimpleObjectProperty<>();
     public SimpleIntegerProperty valordenegocio = new SimpleIntegerProperty();
+    public SimpleStringProperty tipo = new SimpleStringProperty();
 
 
     public void setvalordenegocio(Integer valor) {
@@ -40,6 +41,12 @@ public class Historias  implements Comparable<Historias>{
     public SimpleStringProperty descriscaoProperty() { return descricao; }
 
     public void setDescricao(String descricao) { this.descricao.set(descricao); }
+
+    public String getTipo() { return tipo.get(); }
+
+    public SimpleStringProperty tipoProperty() { return tipo; }
+
+    public void setTipo(String tipo) { this.tipo.set(tipo); }
 
     public long getIdhistoria() {
         return idhistoria.get();

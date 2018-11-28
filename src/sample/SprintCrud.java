@@ -13,13 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import sample.utils.Conexao;
 import sample.utils.HistoriaDAO;
 import sample.utils.SprintDAO;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -62,7 +64,9 @@ public class SprintCrud {
         historia = FXCollections.observableArrayList();
         Platform.runLater(() -> {
 
-            if (this.idSprintParam != null) {
+            if (this.idSprintParam == null) {
+                //System.out.println("DEU RUIM");
+            } else {
                 try {
                     sprintDAO = sprintDAO.findOne(conexao, idSprintParam);
                     LocalDate localDateInicio = sprintDAO.getDtInicio().toLocalDate();
@@ -257,6 +261,7 @@ public class SprintCrud {
             HistoriaDAO historiaDAO = new HistoriaDAO();
             historiaDAO.setIdHistoria((long) i);
             historiaDAO.setStatus("TODO");
+            historiaDAO.setTipo("Historia");
             this.sprintDAO.getHistorias().add(historiaDAO);
 
             // Para mover as histórias para outros pane (TO DO, DOING, DONE)
@@ -273,6 +278,8 @@ public class SprintCrud {
             ComboBox valueBus = (ComboBox) novaHistoria.lookup("#valueBus");
             valueBus.getItems().addAll(1000, 3000, 5000);
             TextField tituloHist = (TextField) novaHistoria.lookup("#tituloHist");
+            Text tipo = (Text) novaHistoria.lookup("#tipo");
+            tipo.setText("Historia");
             tituloHist.textProperty().addListener((observable, oldValue, newValue) -> {
                 Object business = valueBus.getSelectionModel().getSelectedItem();
                 Object pts = histPts.getSelectionModel().getSelectedItem();
@@ -280,7 +287,8 @@ public class SprintCrud {
                         newValue,
                         business != null ? Integer.valueOf(business.toString()) : null,
                         pts != null ? Integer.valueOf(pts.toString()) : null,
-                        null);
+                        null,
+                        tipo.getText());
             });
             valueBus.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 String text = tituloHist.getText();
@@ -289,7 +297,8 @@ public class SprintCrud {
                         text,
                         newValue != null ? Integer.valueOf(newValue.toString()) : null,
                         pts != null ? Integer.valueOf(pts.toString()) : null,
-                        null);
+                        null,
+                        tipo.getText());
             });
             histPts.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 String text = tituloHist.getText();
@@ -298,12 +307,13 @@ public class SprintCrud {
                         text,
                         business != null ? Integer.valueOf(business.toString()) : null,
                         newValue != null ? Integer.valueOf(newValue.toString()) : null,
-                        null);
+                        null,
+                        tipo.getText());
             });
             Button histBtn = (Button) novaHistoria.lookup("#histBtn");
 
             // PARA TELA DE INFORMAÇÕES
-            historiaButtonOnAction(novaHistoria, histPts, valueBus, tituloHist, histBtn);
+            historiaButtonOnAction(novaHistoria, histPts, valueBus, tituloHist, histBtn, tipo, dao);
             // ACABOU CÓDIGO DA TELA DE INFO
 
             toDo.getChildren().add(novaHistoria);
@@ -325,6 +335,15 @@ public class SprintCrud {
             ComboBox valueBus = (ComboBox) novaHistoria.lookup("#valueBus");
             valueBus.getItems().addAll(1000, 3000, 5000);
             valueBus.getSelectionModel().select(dao.getValueBusiness());
+            Text tipo = (Text) novaHistoria.lookup("#tipo");
+            tipo.setText(dao.getTipo());
+            Rectangle rectTipo = (Rectangle) novaHistoria.lookup("#rectTipo");
+            if(tipo.getText().equals("Historia"))
+                rectTipo.setFill(Color.web("#1e90ff"));
+            else if(tipo.getText().equals("Bug"))
+                rectTipo.setFill(Color.web("#ce271e"));
+            else if(tipo.getText().equals("Defeito"))
+                rectTipo.setFill(Color.web("#e0b91f"));
             TextField tituloHist = (TextField) novaHistoria.lookup("#tituloHist");
             tituloHist.textProperty().setValue(dao.getNome());
             tituloHist.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -334,7 +353,8 @@ public class SprintCrud {
                         newValue,
                         business != null ? Integer.valueOf(business.toString()) : null,
                         pts != null ? Integer.valueOf(pts.toString()) : null,
-                        null);
+                        null,
+                        tipo.getText());
             });
             valueBus.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 String text = tituloHist.getText();
@@ -343,7 +363,8 @@ public class SprintCrud {
                         text,
                         newValue != null ? Integer.valueOf(newValue.toString()) : null,
                         pts != null ? Integer.valueOf(pts.toString()) : null,
-                        null);
+                        null,
+                        tipo.getText());
             });
             histPts.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 String text = tituloHist.getText();
@@ -352,12 +373,13 @@ public class SprintCrud {
                         text,
                         business != null ? Integer.valueOf(business.toString()) : null,
                         newValue != null ? Integer.valueOf(newValue.toString()) : null,
-                        null);
+                        null,
+                        tipo.getText());
             });
             Button histBtn = (Button) novaHistoria.lookup("#histBtn");
 
             // PARA TELA DE INFORMAÇÕES
-            historiaButtonOnAction(novaHistoria, histPts, valueBus, tituloHist, histBtn);
+            historiaButtonOnAction(novaHistoria, histPts, valueBus, tituloHist, histBtn, tipo, dao);
             // ACABOU CÓDIGO DA TELA DE INFO
 
             switch (dao.getStatus()) {
@@ -375,9 +397,9 @@ public class SprintCrud {
         }
     }
 
-    private void historiaButtonOnAction(AnchorPane novaHistoria, ComboBox histPts, ComboBox valueBus, TextField tituloHist, Button histBtn) {
+    private void historiaButtonOnAction(AnchorPane novaHistoria, ComboBox histPts, ComboBox valueBus, TextField tituloHist, Button histBtn, Text tipo, HistoriaDAO dao) {
         histBtn.setOnAction(actionEvent -> {
-            AnchorPane infoTela = null;
+            TabPane infoTela = null;
             try {
                 infoTela = FXMLLoader.load(getClass().getResource("InfoHistoria.fxml"));
             } catch (IOException e) {
@@ -391,15 +413,38 @@ public class SprintCrud {
             Label valorBus = (Label) infoTela.lookup("#valorBus");
             if (!valueBus.getSelectionModel().isEmpty())
                 valorBus.setText(valueBus.getSelectionModel().getSelectedItem().toString());
+            ComboBox tipoTarefa = (ComboBox) infoTela.lookup("#tipoTarefa");
+            tipoTarefa.getItems().addAll("Historia","Bug", "Defeito");
+            tipoTarefa.getSelectionModel().select(tipo.getText());
 
             TextArea descrHist = (TextArea) infoTela.lookup("#descrHist");
-            sprintDAO.getHistorias().forEach(historiaDAO -> {
-                Long idLong = Long.valueOf(novaHistoria.getId().replaceAll("\\D", ""));
-                if (historiaDAO.getIdHistoria().equals(idLong)) {
-                    descrHist.setText(historiaDAO.getDescricao());
+            String id = novaHistoria.getId();
+            Long idLong = Long.valueOf(id.replaceAll("\\D", ""));
+            sprintDAO.getHistorias().forEach(historia -> {
+                if (historia.getIdHistoria().equals(idLong)) {
+                    descrHist.setText(historia.getDescricao());
                 }
             });
+            //if(dao != null && dao.getDescricao() != null)
+            //    descrHist.setText(dao.getDescricao());
             Button infoSalvar = (Button) infoTela.lookup("#infoSalvar");
+
+            Rectangle rectTipo = (Rectangle) novaHistoria.lookup("#rectTipo");
+
+            tipoTarefa.setOnAction(actionEvent4 -> {
+                if(tipoTarefa.getSelectionModel().getSelectedItem() == "Historia") {
+                    rectTipo.setFill(Color.web("#1e90ff"));
+                    tipo.setText("Historia");
+                }
+                else if(tipoTarefa.getSelectionModel().getSelectedItem() == "Bug"){
+                    rectTipo.setFill(Color.web("#ce271e"));
+                    tipo.setText("Bug");
+                }
+                else{
+                    rectTipo.setFill(Color.web("#e0b91f"));
+                    tipo.setText("Defeito");
+                }
+            });
 
             infoSalvar.setOnAction(actionEvent2 -> {
                 String text = tituloHist.getText();
@@ -409,7 +454,8 @@ public class SprintCrud {
                         text,
                         business != null ? Integer.valueOf(business.toString()) : null,
                         pts != null ? Integer.valueOf(pts.toString()) : null,
-                        descrHist.getText());
+                        descrHist.getText(),
+                        tipo.getText());
                 mainSprint.getChildren().remove(mainSprint.lookup("#infoHistoria"));
                 mainSprint.setDisable(true);
                 mainSprint.setVisible(false);
@@ -478,36 +524,27 @@ public class SprintCrud {
         if (sprintDAO.getIdSprint() == null) {
             sprintDAO = sprintDAO.create(conexao, sprintDAO);
             this.removerTodasTarefas();
-            atualizaHistoriasForEach();
-            mensagemSucess();
+            sprintDAO.getHistorias().forEach(historiaDAO -> {
+                try {
+                    novaHistoria(historiaDAO);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         } else {
             sprintDAO.update(conexao, sprintDAO);
             this.removerTodasTarefas();
-            atualizaHistoriasForEach();
-            mensagemSucess();
+            sprintDAO.getHistorias().forEach(historiaDAO -> {
+                try {
+                    novaHistoria(historiaDAO);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
-    private void atualizaHistoriasForEach() {
-        sprintDAO.getHistorias().forEach(historiaDAO -> {
-            try {
-                novaHistoria(historiaDAO);
-            } catch (IOException e) {
-                e.printStackTrace();
-                mensagemFailure();
-            }
-        });
-    }
-
-    private void mensagemSucess() {
-        JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
-    }
-
-    private void mensagemFailure() {
-        JOptionPane.showMessageDialog(null, "Falha ao salvar!");
-    }
-
-    public void atualizaDadosHistoria(AnchorPane novaHistoria, String text, Integer business, Integer pts, String descr) {
+    public void atualizaDadosHistoria(AnchorPane novaHistoria, String text, Integer business, Integer pts, String descr, String tipo) {
         HistoriaDAO historiaDAO = new HistoriaDAO();
         AtomicReference<Integer> index = new AtomicReference<>();
         String id = novaHistoria.getId();
@@ -517,6 +554,7 @@ public class SprintCrud {
                 historiaDAO.setIdHistoria(historia.getIdHistoria());
                 historiaDAO.setIdSprint(historia.getIdSprint());
                 historiaDAO.setStatus(historia.getStatus());
+                historiaDAO.setTipo(historia.getTipo());
                 historiaDAO.setDtCriacao(historia.getDtCriacao());
                 historiaDAO.setDtAlteracao(historia.getDtAlteracao());
                 historiaDAO.setDescricao(historia.getDescricao());
@@ -526,6 +564,7 @@ public class SprintCrud {
         historiaDAO.setNome(text);
         historiaDAO.setValueBusiness(business);
         historiaDAO.setPontos(pts);
+        historiaDAO.setTipo(tipo);
         if (descr != null) {
             historiaDAO.setDescricao(descr);
         }

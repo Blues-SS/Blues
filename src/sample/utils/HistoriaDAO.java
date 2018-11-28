@@ -17,6 +17,8 @@ public class HistoriaDAO {
 
     private String status;
 
+    private String tipo;
+
     private String nome;
 
     private Integer valueBusiness;
@@ -61,6 +63,14 @@ public class HistoriaDAO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getNome() {
@@ -113,7 +123,7 @@ public class HistoriaDAO {
 
     public static List<HistoriaDAO> findByIdSprint(Conexao conexao, Integer idSprint) throws SQLException {
         List<HistoriaDAO> historiaDAOS = new ArrayList<>();
-        String sql = "SELECT his.id_historia, his.id_sprint, his.status, his.nome, his.value_business, his.pontos, his.dt_criacao, his.dt_alteracao, his.descricao " +
+        String sql = "SELECT his.id_historia, his.id_sprint, his.status, his.tipo, his.nome, his.value_business, his.pontos, his.dt_criacao, his.dt_alteracao, his.descricao " +
                 "from historia his " +
                 "where id_sprint =" + idSprint;
 
@@ -133,6 +143,7 @@ public class HistoriaDAO {
             historiaDAO.setNome(rs.getString("nome"));
             historiaDAO.setIdSprint(rs.getLong("id_sprint"));
             historiaDAO.setStatus(rs.getString("status"));
+            historiaDAO.setTipo(rs.getString("tipo"));
             historiaDAOS.add(historiaDAO);
         }
         conexao.Desconectar();
@@ -152,9 +163,10 @@ public class HistoriaDAO {
         try {
             conexao.Conectar();
 
-            String sql = "INSERT INTO HISTORIA (ID_SPRINT, STATUS, NOME, PONTOS, VALUE_BUSINESS, DT_CRIACAO, DT_ALTERACAO, DESCRICAO) VALUES ("
+            String sql = "INSERT INTO HISTORIA (ID_SPRINT, STATUS, TIPO, NOME, PONTOS, VALUE_BUSINESS, DT_CRIACAO, DT_ALTERACAO, DESCRICAO) VALUES ("
                     + historiaDAO.getIdSprint() + ","
                     + "'" + historiaDAO.getStatus() + "'" + ","
+                    + "'" + historiaDAO.getTipo() + "'" + ","
                     + "'" + historiaDAO.getNome() + "',"
                     + historiaDAO.getPontos() + ","
                     + historiaDAO.getValueBusiness() + ","
@@ -181,6 +193,8 @@ public class HistoriaDAO {
                     + historiaDAO.getIdSprint() + ","
                     + "status = '"
                     + historiaDAO.getStatus() + "',"
+                    + "tipo = '"
+                    + historiaDAO.getTipo() + "',"
                     + "nome = "
                     + "'" + historiaDAO.getNome() + "',"
                     + "pontos = " +
@@ -283,6 +297,7 @@ public class HistoriaDAO {
         historiaDAO.setNome(rs.getString("nome"));
         historiaDAO.setIdSprint(rs.getLong("id_sprint"));
         historiaDAO.setStatus(rs.getString("status"));
+        historiaDAO.setTipo(rs.getString("tipo"));
 
         return historiaDAO;
     }
@@ -442,6 +457,7 @@ public class HistoriaDAO {
         historia.setPontos(historiaDAO.getPontos());
         historia.setDtcriacao(historiaDAO.getDtCriacao());
         historia.setDtalteracao(historiaDAO.getDtAlteracao());
+        historia.setTipo(historiaDAO.getTipo());
 
         return historia;
     }
