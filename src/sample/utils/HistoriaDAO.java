@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HistoriaDAO {
@@ -28,6 +29,15 @@ public class HistoriaDAO {
 
     private Date dtAlteracao;
 
+    private Integer valordenegocio;
+
+    public Integer getvalordenegocio() {
+        return valordenegocio;
+    }
+
+    public void setvalordenegocio(Integer ID) {
+        this.valordenegocio = ID;
+    }
 
     public Long getIdHistoria() {
         return idHistoria;
@@ -130,15 +140,6 @@ public class HistoriaDAO {
     }
 
     public HistoriaDAO save(Conexao conexao, HistoriaDAO historiaDAO) {
-
-        if (historiaDAO.getIdHistoria() != null) {
-            return update(conexao, historiaDAO);
-        } else {
-            return create(conexao, historiaDAO);
-        }
-    }
-
-    public HistoriaDAO histBacklog(Conexao conexao, HistoriaDAO historiaDAO) {
 
         if (historiaDAO.getIdHistoria() != null) {
             return update(conexao, historiaDAO);
@@ -415,12 +416,19 @@ public class HistoriaDAO {
             historia.setDtCriacao(rs.getDate("dt_criacao"));
             historia.setDtAlteracao(rs.getDate("dt_alteracao"));
 
-            list.add(toInterface(historia));
+            int valornegocio = (historia.getValueBusiness()) / (historia.getPontos());
+            historia.setvalordenegocio(valornegocio);
+
+            list.add(toInterface2(historia));
         }
         conexao.Desconectar();
 
+        Collections.sort(list);
+
         return list;
     }
+
+
 
     private Historias toInterface(HistoriaDAO historiaDAO) {
         Historias historia = new Historias();
@@ -434,6 +442,23 @@ public class HistoriaDAO {
         historia.setPontos(historiaDAO.getPontos());
         historia.setDtcriacao(historiaDAO.getDtCriacao());
         historia.setDtalteracao(historiaDAO.getDtAlteracao());
+
+        return historia;
+    }
+
+    private Historias toInterface2(HistoriaDAO historiaDAO) {
+        Historias historia = new Historias();
+
+        historia.setIdsprint(historiaDAO.getIdSprint());
+        historia.setIdhistoria(historiaDAO.getIdHistoria());
+        historia.setIdstatus(historiaDAO.getStatus());
+        historia.setNomehist(historiaDAO.getNome());
+        historia.setDescricao(historiaDAO.getDescricao());
+        historia.setValuebusiness(historiaDAO.getValueBusiness());
+        historia.setPontos(historiaDAO.getPontos());
+        historia.setDtcriacao(historiaDAO.getDtCriacao());
+        historia.setDtalteracao(historiaDAO.getDtAlteracao());
+        historia.setvalordenegocio(historiaDAO.getvalordenegocio());
 
         return historia;
     }

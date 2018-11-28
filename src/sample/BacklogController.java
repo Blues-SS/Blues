@@ -151,8 +151,8 @@ public class BacklogController {
 
                 TextArea descrHist = (TextArea) infoTela.lookup("#descrHist");
                 TextField idHistoriasTF = (TextField) infoTela.lookup("#idHistoriasTF");
-                idHistoriasTF.setText(idHistoriaTF.getText());//REMOVER
                 TextField valorTit = (TextField) infoTela.lookup("#valorTit");
+                idHistoriasTF.setText(idHistoriaTF.getText());//REMOVER
 
                 valorTit.setText(tituloHist.getText());
 
@@ -295,35 +295,41 @@ public class BacklogController {
                 infodeletar.setOnAction(actionEvent3 -> {
 
 
+                    int Joption = JOptionPane.showConfirmDialog(null ,"Deseja fechar a aplicação?",
+                            "Deletar Historia",JOptionPane.YES_NO_OPTION);
 
-                    JOptionPane.showMessageDialog(null, "Deseja realmente deletar esta historia ?");
+                    if (Joption == JOptionPane.YES_OPTION ) {
+                        if (!(ID.isEmpty())) {//se tiver tiver id senao ira ser null e não entra aqui
+                            String meuid = ID;
+                            Long meuidnumber = Long.parseLong(meuid);
+                            try {
+                                historiaDAO.deleteHistoria(new Conexao(), meuidnumber);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                    if (!(ID.isEmpty())) {//se tiver tiver id senao ira ser null e não entra aqui
-                        String meuid = ID;
-                        Long meuidnumber = Long.parseLong(meuid);
+
+
+                        removerTodasTarefas();
+
+                        //regaregar as historia (esta dando erro no historia.addall(list));
+
                         try {
-                            historiaDAO.deleteHistoria(new Conexao(), meuidnumber);
+                            this.carregarHistorias();
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+
+                        mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
+                        mainBacklog.setDisable(true);
+                        mainBacklog.setVisible(false);
+                    }else{
+                        System.out.println("teste");
+                        mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
+                        mainBacklog.setDisable(true);
+                        mainBacklog.setVisible(false);
                     }
-
-
-
-                    removerTodasTarefas();
-
-                    //regaregar as historia (esta dando erro no historia.addall(list));
-
-                    try {
-                        this.carregarHistorias();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
-                    mainBacklog.setDisable(true);
-                    mainBacklog.setVisible(false);
-
                 });
 
 

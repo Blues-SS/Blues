@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Historias {
+public class Historias  implements Comparable<Historias>{
 
     public SimpleLongProperty idhistoria = new SimpleLongProperty();
     public SimpleLongProperty idsprint = new SimpleLongProperty();
@@ -16,7 +16,18 @@ public class Historias {
     public SimpleIntegerProperty pontos = new SimpleIntegerProperty();
     public SimpleObjectProperty dtcriacao = new SimpleObjectProperty<>();
     public SimpleObjectProperty dtalteracao = new SimpleObjectProperty<>();
+    public SimpleIntegerProperty valordenegocio = new SimpleIntegerProperty();
 
+
+    public void setvalordenegocio(Integer valor) {
+            this.valordenegocio.set(valor);
+    }
+
+    public long getvalordenegocio() {
+        return valordenegocio.get();
+    }
+
+    public SimpleIntegerProperty valordenegocio() { return valordenegocio; }
 
     public int getPontos() { return pontos.get(); }
 
@@ -113,4 +124,16 @@ public class Historias {
     public void setDtalteracao(Object dtalteracao) {
         this.dtalteracao.set(dtalteracao);
     }
+
+    @Override
+    public int compareTo(Historias outraHist) {
+        if ( this.getvalordenegocio() > outraHist.getvalordenegocio()) {
+            return -1;
+        }
+        if (this.getvalordenegocio() < outraHist.getvalordenegocio()) {
+            return 1;
+        }
+        return 0;
+    }
+
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #FFF;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
+<AnchorPane id="AnchorPane" maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #FFF;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
     <children>
 
         <Button fx:id="NovoBT" layoutX="1124.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#handleNovaHistoria" prefHeight="45.0" prefWidth="128.0" stylesheets="@Styles.css" text="Nova Historia">
@@ -21,11 +21,6 @@
                 <Font name="Nirmala UI" size="16.0" />
             </font>
         </Button>
-      <Button layoutX="977.0" layoutY="702.0" mnemonicParsing="false" onMouseClicked="#voltar" prefHeight="45.0" prefWidth="128.0" stylesheets="@Styles.css" text="Salvar">
-         <font>
-            <Font name="Nirmala UI" size="16.0" />
-         </font>
-      </Button>
       <Label layoutX="567.0" layoutY="24.0" text="Backlog">
          <font>
             <Font name="Nirmala UI" size="42.0" />
