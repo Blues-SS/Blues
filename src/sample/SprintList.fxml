@@ -39,14 +39,14 @@
                           <Font name="System Bold Italic" size="22.0" />
                       </font>
                   </Label>
-                  <Label fx:id="dataLB" layoutX="25.0" layoutY="317.0" text="Data Inicio">
+                  <Label fx:id="dataLB" layoutX="25.0" layoutY="317.0" text="De">
 
                       <font>
                           <Font name="System Bold Italic" size="22.0" />
                       </font>
                   </Label>
             <ComboBox fx:id="CBstatus" layoutX="22.0" layoutY="226.0" prefHeight="36.0" prefWidth="338.0" />
-            <Label layoutX="222.0" layoutY="320.0" text="Data Fim">
+            <Label layoutX="222.0" layoutY="320.0" text="Ate">
                <font>
                   <Font name="System Bold Italic" size="22.0" />
                </font>

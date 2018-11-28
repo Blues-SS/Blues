@@ -69,7 +69,7 @@
             <Font name="Nirmala UI Bold" size="16.0" />
          </font>
       </Label>
-      <Button layoutX="989.0" layoutY="710.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#salvarNovaSprint" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Salvar">
+      <Button fx:id="salvar" layoutX="989.0" layoutY="710.0" maxHeight="40.0" maxWidth="130.0" minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#salvarNovaSprint" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Salvar">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>

@@ -1,26 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #fffcf7; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
-   <children>
-      <LineChart fx:id="Burndown" layoutY="128.0" prefHeight="328.0" prefWidth="1280.0" title="Burndown" AnchorPane.bottomAnchor="312.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="128.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" fx:id="x" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="y" side="LEFT" />
-        </yAxis>
-      </LineChart>
-      <Button layoutX="1141.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#handleVoltar" prefHeight="40.0" prefWidth="130.0" stylesheets="@Styles.css" text="Voltar">
+<AnchorPane id="AnchorPane" maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #FFF;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BacklogController">
+    <children>
+
+        <Button fx:id="NovoBT" layoutX="1124.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#handleNovaHistoria" prefHeight="45.0" prefWidth="128.0" stylesheets="@Styles.css" text="Nova Historia">
+        <font>
+            <Font name="Nirmala UI" size="16.0" />
+        </font>
+        </Button>
+        <Button fx:id="VoltarBT" layoutX="1124.0" layoutY="702.0" mnemonicParsing="false" onMouseClicked="#voltar" prefHeight="45.0" prefWidth="128.0" stylesheets="@Styles.css" text="Voltar">
+            <font>
+                <Font name="Nirmala UI" size="16.0" />
+            </font>
+        </Button>
+      <Button layoutX="977.0" layoutY="702.0" mnemonicParsing="false" onMouseClicked="#voltar" prefHeight="45.0" prefWidth="128.0" stylesheets="@Styles.css" text="Salvar">
          <font>
             <Font name="Nirmala UI" size="16.0" />
          </font>
       </Button>
-   </children>
+      <Label layoutX="567.0" layoutY="24.0" text="Backlog">
+         <font>
+            <Font name="Nirmala UI" size="42.0" />
+         </font>
+      </Label>
+        <ScrollPane fx:id="Scroll" hbarPolicy="NEVER" layoutX="28.0" layoutY="98.0" maxHeight="1.7976931348623157E308" maxWidth="1224.0" minHeight="550.0" minWidth="1224.0" prefHeight="586.0" prefWidth="1224.0" style="-fx-background-color: #fffcf7; -fx-border-color: #ff9100; -fx-border-width: 2;" stylesheets="@Styles.css">
+            <content>
+                <FlowPane fx:id="mainFlowBacklog" hgap="10.0" prefHeight="580.0" prefWidth="1233.0" style="-fx-background-color: #fffcf7;" vgap="10.0">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </FlowPane>
+            </content>
+        </ScrollPane>
+        <AnchorPane fx:id="mainBacklog" disable="true" maxHeight="768.0" maxWidth="1280.0" minHeight="768.0" minWidth="1280.0" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-position: center;" visible="false" />
+    </children>
 </AnchorPane>
