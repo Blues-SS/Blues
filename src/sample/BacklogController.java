@@ -34,6 +34,7 @@ public class BacklogController {
     @FXML
     private FlowPane mainFlowBacklog;
 
+
     private double xOffset = 0;
     private double yOffset = 0;
     int i = 0;
@@ -43,9 +44,24 @@ public class BacklogController {
 
     private HistoriaDAO historiaDAO = new HistoriaDAO();
     ObservableList<Historias> historia;
+    ObservableList<Historias> historiaInfo;
 
-    @FXML
-    private FlowPane toDo;
+
+    HistoriaDAO infohistoriaDAO = new HistoriaDAO();
+
+
+    private ObservableList<Historias> gethistoriainfo(String ID) throws SQLException {
+        return convertToObservableinfo(infohistoriaDAO.getHistoriainfo(new Conexao(), ID));
+    }
+
+    private ObservableList<Historias> convertToObservableinfo(List<Historias> list) {
+
+        ObservableList<Historias> sprints = FXCollections.observableArrayList();
+        historiaInfo.addAll(list);
+
+
+        return historiaInfo;
+    }
 
 
 
@@ -67,13 +83,13 @@ public class BacklogController {
 
         historia = FXCollections.observableArrayList();
 
-        /*getHistoriaBacklog().forEach(teste ->{
+        getHistoriaBacklog().forEach(teste ->{
             try {
                 newHistoria(teste);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        });*/
+        });
     }
 
 
@@ -124,6 +140,13 @@ public class BacklogController {
                 try {
                     AnchorPane infoTela = FXMLLoader.load(getClass().getResource("newhistBacklog.fxml"));
 
+
+
+
+                    javafx.scene.control.TextField idHistoriasTF = (javafx.scene.control.TextField) infoTela.lookup("#idHistoriasTF");
+                    javafx.scene.control.TextField hisTextField = (javafx.scene.control.TextField) infoTela.lookup("#idHistoriasTF");
+                    idHistoriasTF.setText(idHistoriaTF.getText());
+
                     javafx.scene.control.TextField valorTit = (javafx.scene.control.TextField) infoTela.lookup("#valorTit");
                     valorTit.setText(tituloHist.getText());
                     //instanciar botoes
@@ -135,17 +158,18 @@ public class BacklogController {
                     ComboBox valueCB = (ComboBox) infoTela.lookup("#valueCB");
                     valueCB.getItems().addAll(1000, 3000, 5000);
 
+                    String ID = idHistoriasTF.getText();
+                    //exemplo pegar todos dados referente a historia
 
-                    if (!histPts.getSelectionModel().isEmpty()) {
-                        pontosCB.setValue(histPts.getSelectionModel().getSelectedItem().toString());
-                    }
+                    historiaDAO.getHistoriainfo(new Conexao(),ID).forEach(historia -> {
+                        System.out.println(historia.getIdhistoria());
+                            pontosCB.setValue(historia.getPontos());
+                            valueCB.setValue(historia.getValuebusiness());
+                            hisTextField.setText(historia.getDescriscao());
+                            statusCB.setValue(historia.getIdstatus());
+                    });
 
-                    if (!valueBus.getSelectionModel().isEmpty()) {
-                        valueCB.setValue(valueBus.getSelectionModel().getSelectedItem().toString());
-                    }
 
-                    javafx.scene.control.TextField idHistoriasTF = (javafx.scene.control.TextField) infoTela.lookup("#idHistoriasTF");
-                    idHistoriasTF.setText(idHistoriaTF.getText());
 
 
                     javafx.scene.control.TextArea descrHist = (javafx.scene.control.TextArea) infoTela.lookup("#descrHist");
@@ -168,13 +192,7 @@ public class BacklogController {
                             historiaDAO.newHistoria(new Conexao(), titulo, business, pts, status, descricao);
                         }
 
-                    /*atualizaDadosHistoria(novaHistoria,
-                            titulo,
-                            business != null ? Integer.valueOf(business.toString()) : null,
-                            pts != null ? Integer.valueOf(pts.toString()) : null,
-                            descrHist.getText());*/
                         mainBacklog.getChildren().remove(mainBacklog.lookup("#newhists"));
-
                         System.out.println(historiaDAO.getIdHistoria());
                         mainBacklog.setDisable(true);
                         mainBacklog.setVisible(false);
@@ -187,6 +205,8 @@ public class BacklogController {
                         mainBacklog.setDisable(true);
                         mainBacklog.setVisible(false);
                     });
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
