@@ -22,6 +22,7 @@ import sample.utils.Conexao;
 import sample.utils.HistoriaDAO;
 import sample.utils.SprintDAO;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -64,9 +65,7 @@ public class SprintCrud {
         historia = FXCollections.observableArrayList();
         Platform.runLater(() -> {
 
-            if (this.idSprintParam == null) {
-                //System.out.println("DEU RUIM");
-            } else {
+            if (this.idSprintParam != null) {
                 try {
                     sprintDAO = sprintDAO.findOne(conexao, idSprintParam);
                     LocalDate localDateInicio = sprintDAO.getDtInicio().toLocalDate();
@@ -418,15 +417,12 @@ public class SprintCrud {
             tipoTarefa.getSelectionModel().select(tipo.getText());
 
             TextArea descrHist = (TextArea) infoTela.lookup("#descrHist");
-            String id = novaHistoria.getId();
-            Long idLong = Long.valueOf(id.replaceAll("\\D", ""));
-            sprintDAO.getHistorias().forEach(historia -> {
-                if (historia.getIdHistoria().equals(idLong)) {
-                    descrHist.setText(historia.getDescricao());
+            sprintDAO.getHistorias().forEach(historiaDAO -> {
+                Long idLong = Long.valueOf(novaHistoria.getId().replaceAll("\\D", ""));
+                if (historiaDAO.getIdHistoria().equals(idLong)) {
+                    descrHist.setText(historiaDAO.getDescricao());
                 }
             });
-            //if(dao != null && dao.getDescricao() != null)
-            //    descrHist.setText(dao.getDescricao());
             Button infoSalvar = (Button) infoTela.lookup("#infoSalvar");
 
             Rectangle rectTipo = (Rectangle) novaHistoria.lookup("#rectTipo");
@@ -524,24 +520,33 @@ public class SprintCrud {
         if (sprintDAO.getIdSprint() == null) {
             sprintDAO = sprintDAO.create(conexao, sprintDAO);
             this.removerTodasTarefas();
-            sprintDAO.getHistorias().forEach(historiaDAO -> {
-                try {
-                    novaHistoria(historiaDAO);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            atualizaHistoriasForEach();
+            mensagemSucess();
         } else {
             sprintDAO.update(conexao, sprintDAO);
             this.removerTodasTarefas();
-            sprintDAO.getHistorias().forEach(historiaDAO -> {
-                try {
-                    novaHistoria(historiaDAO);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            atualizaHistoriasForEach();
+            mensagemSucess();
         }
+    }
+
+    private void atualizaHistoriasForEach() {
+        sprintDAO.getHistorias().forEach(historiaDAO -> {
+            try {
+                novaHistoria(historiaDAO);
+            } catch (IOException e) {
+                e.printStackTrace();
+                mensagemFailure();
+            }
+        });
+    }
+
+    private void mensagemSucess() {
+        JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+    }
+
+    private void mensagemFailure() {
+        JOptionPane.showMessageDialog(null, "Falha ao salvar!");
     }
 
     public void atualizaDadosHistoria(AnchorPane novaHistoria, String text, Integer business, Integer pts, String descr, String tipo) {
